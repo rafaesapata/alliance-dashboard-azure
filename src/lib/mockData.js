@@ -7,6 +7,7 @@ export const mockWorkItems = [
     workItemType: "User Story",
     assignedTo: "João Silva",
     createdDate: new Date("2025-06-01"),
+    modifiedDate: new Date("2025-06-03"),
     areaPath: "AWS Partnership",
     priority: "High",
     tags: "authentication, aws, sso",
@@ -22,6 +23,7 @@ export const mockWorkItems = [
     workItemType: "Bug",
     assignedTo: "Maria Santos",
     createdDate: new Date("2025-05-30"),
+    modifiedDate: new Date("2025-06-02"),
     areaPath: "AWS Partnership",
     priority: "Critical",
     tags: "bug, aws, lambda",
@@ -37,6 +39,7 @@ export const mockWorkItems = [
     workItemType: "Task",
     assignedTo: "Pedro Costa",
     createdDate: new Date("2025-05-28"),
+    modifiedDate: null,
     areaPath: "AWS Partnership",
     priority: "Medium",
     tags: "documentation, api",
@@ -52,6 +55,7 @@ export const mockWorkItems = [
     workItemType: "Feature",
     assignedTo: "Ana Oliveira",
     createdDate: new Date("2025-05-25"),
+    modifiedDate: new Date("2025-06-01"),
     areaPath: "AWS Partnership",
     priority: "Low",
     tags: "monitoring, cloudwatch, aws",
@@ -67,6 +71,7 @@ export const mockWorkItems = [
     workItemType: "Task",
     assignedTo: "Carlos Ferreira",
     createdDate: new Date("2025-05-20"),
+    modifiedDate: null,
     areaPath: "AWS Partnership",
     priority: "Medium",
     tags: "performance, optimization",
@@ -82,6 +87,7 @@ export const mockWorkItems = [
     workItemType: "Epic",
     assignedTo: "Luiza Rodrigues",
     createdDate: new Date("2025-05-15"),
+    modifiedDate: new Date("2025-05-30"),
     areaPath: "AWS Partnership",
     priority: "High",
     tags: "backup, s3, automation",
@@ -97,6 +103,7 @@ export const mockWorkItems = [
     workItemType: "Task",
     assignedTo: "Roberto Lima",
     createdDate: new Date("2025-05-10"),
+    modifiedDate: new Date("2025-05-28"),
     areaPath: "AWS Partnership",
     priority: "Medium",
     tags: "testing, api-gateway, performance",
@@ -112,6 +119,7 @@ export const mockWorkItems = [
     workItemType: "User Story",
     assignedTo: "Fernanda Alves",
     createdDate: new Date("2025-05-05"),
+    modifiedDate: new Date("2025-06-03"),
     areaPath: "AWS Partnership",
     priority: "Critical",
     tags: "security, alerts, monitoring",
@@ -123,20 +131,21 @@ export const mockWorkItems = [
 ];
 
 export const getMockStats = (workItems) => {
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+  const currentQuarter = Math.floor(currentMonth / 3);
+  
   const stats = {
     total: workItems.length,
     byState: {},
     byType: {},
     byAssignee: {},
     recentItems: workItems.slice(0, 5),
-    totalValue: workItems.reduce((sum, item) => {
-      const value = parseFloat(item.valor.replace(/[$\s,]/g, '')) || 0;
-      return sum + value;
-    }, 0),
-    totalCashClaim: workItems.reduce((sum, item) => {
-      const cashClaim = parseFloat(item.cashClaim.replace(/[$\s,]/g, '')) || 0;
-      return sum + cashClaim;
-    }, 0)
+    valorMes: 0,
+    valorTrimestre: 0,
+    totalValue: 0,
+    totalCashClaim: 0
   };
 
   workItems.forEach(item => {
@@ -148,6 +157,25 @@ export const getMockStats = (workItems) => {
     
     // Por responsável
     stats.byAssignee[item.assignedTo] = (stats.byAssignee[item.assignedTo] || 0) + 1;
+    
+    // Calcular valores
+    const itemValue = parseFloat(item.valor.replace(/[$\s,]/g, '')) || 0;
+    const cashClaimValue = parseFloat(item.cashClaim.replace(/[$\s,]/g, '')) || 0;
+    
+    stats.totalValue += itemValue;
+    stats.totalCashClaim += cashClaimValue;
+    
+    // Verificar se é do mês atual
+    const itemDate = new Date(item.createdDate);
+    if (itemDate.getMonth() === currentMonth && itemDate.getFullYear() === currentYear) {
+      stats.valorMes += itemValue;
+    }
+    
+    // Verificar se é do trimestre atual
+    const itemQuarter = Math.floor(itemDate.getMonth() / 3);
+    if (itemQuarter === currentQuarter && itemDate.getFullYear() === currentYear) {
+      stats.valorTrimestre += itemValue;
+    }
   });
 
   return stats;

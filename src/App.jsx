@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
+import UDSHeader from './components/UDSHeader';
 import EnvDebugPanel from './components/EnvDebugPanel';
 import { validateConfig } from './lib/azureConfig';
-import { AlertCircle, Settings } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import './App.css';
 
 function App() {
   const [configValid, setConfigValid] = useState(false);
   const [configError, setConfigError] = useState(null);
-  const [showDebug, setShowDebug] = useState(false);
 
   useEffect(() => {
     try {
@@ -24,10 +24,12 @@ function App() {
 
   if (!configValid) {
     return (
-      <div className="min-h-screen bg-gray-100 p-6">
-        <div className="max-w-4xl mx-auto">
-          {/* Painel de Debug */}
-          <EnvDebugPanel />
+      <>
+        <UDSHeader />
+        <div className="min-h-screen bg-gray-100 p-6">
+          <div className="max-w-4xl mx-auto">
+            {/* Painel de Debug */}
+            <EnvDebugPanel />
           
           {/* Card de Erro */}
           <Card className="w-full">
@@ -66,16 +68,20 @@ function App() {
         </Card>
         </div>
       </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1">
-        <Dashboard />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <UDSHeader />
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-1">
+          <Dashboard />
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
 

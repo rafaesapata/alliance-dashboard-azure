@@ -244,3 +244,93 @@
   }
 }
 
+
+/* Header UDS Compacto */
+.uds-header {
+  background: var(--uds-gradient-primary);
+  color: white;
+  padding: 12px 0;
+  box-shadow: var(--uds-shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.uds-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.uds-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.uds-logo {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--uds-radius-md);
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.uds-logo-text {
+  color: white;
+}
+
+.uds-logo-number {
+  background: white;
+  color: var(--uds-blue-primary);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.uds-header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+}
+
+.uds-header-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.uds-workspace {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: var(--uds-radius-sm);
+}
+
+/* Responsividade do Header */
+@media (max-width: 768px) {
+  .uds-header-content {
+    padding: 0 16px;
+  }
+  
+  .uds-header-title {
+    font-size: 1rem;
+  }
+  
+  .uds-logo-section {
+    gap: 12px;
+  }
+}
+

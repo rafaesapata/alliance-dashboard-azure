@@ -100,29 +100,40 @@ class AzureDevOpsService {
       workItemType: item.fields['System.WorkItemType'],
       assignedTo: item.fields['System.AssignedTo']?.displayName || 'Não atribuído',
       createdDate: new Date(item.fields['System.CreatedDate']),
+      modifiedDate: item.fields['System.ChangedDate'] ? new Date(item.fields['System.ChangedDate']) : null,
       areaPath: item.fields['System.AreaPath'],
       priority: item.fields['Microsoft.VSTS.Common.Priority'] || 'Não definida',
       tags: item.fields['System.Tags'] || '',
       url: item._links?.html?.href || '',
-      // Campos customizados - podem não existir na API real
-      valor: item.fields['Custom.Valor'] || item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
-        `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 1000).toLocaleString('en-US')}.00` : 
-        'Não informado',
+      // Campos customizados - nomes corretos da API Azure DevOps
+      valor: item.fields['Valor solicitado'] || 
+        (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
+          `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 1000).toLocaleString('en-US')}.00` : 
+          'Não informado'),
       cliente: item.fields['Custom.Cliente'] || item.fields['System.AreaPath']?.split('\\').pop() || 'Não informado',
-      cashClaim: item.fields['Custom.CashClaim'] || item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
-        `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 400).toLocaleString('en-US')}.00` : 
-        'Não informado'
+      cashClaim: item.fields['Cash Claim'] || 
+        (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
+          `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 400).toLocaleString('en-US')}.00` : 
+          'Não informado')
     }));
   }
 
   // Obter estatísticas dos work items
   getWorkItemStats(workItems) {
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const currentQuarter = Math.floor(currentMonth / 3);
+    
     const stats = {
       total: workItems.length,
       byState: {},
       byType: {},
       byAssignee: {},
-      recentItems: workItems.slice(0, 5) // 5 mais recentes
+      recentItems: workItems.slice(0, 5), // 5 mais recentes
+      valorMes: 0,
+      valorTrimestre: 0,
+      totalValue: 0
     };
 
     workItems.forEach(item => {
@@ -134,6 +145,22 @@ class AzureDevOpsService {
       
       // Por responsável
       stats.byAssignee[item.assignedTo] = (stats.byAssignee[item.assignedTo] || 0) + 1;
+      
+      // Calcular valores
+      const itemValue = this.parseValueToNumber(item.valor);
+      stats.totalValue += itemValue;
+      
+      // Verificar se é do mês atual
+      const itemDate = new Date(item.createdDate);
+      if (itemDate.getMonth() === currentMonth && itemDate.getFullYear() === currentYear) {
+        stats.valorMes += itemValue;
+      }
+      
+      // Verificar se é do trimestre atual
+      const itemQuarter = Math.floor(itemDate.getMonth() / 3);
+      if (itemQuarter === currentQuarter && itemDate.getFullYear() === currentYear) {
+        stats.valorTrimestre += itemValue;
+      }
     });
 
     return stats;
@@ -236,6 +263,19 @@ class AzureDevOpsService {
     }
     
     return false;
+  }
+
+  // Converter valor string para número
+  parseValueToNumber(valueString) {
+    if (!valueString || valueString === 'Não informado') {
+      return 0;
+    }
+    
+    // Remove símbolos de moeda e espaços, converte vírgulas para pontos
+    const cleanValue = valueString.replace(/[$\s,]/g, '');
+    const numericValue = parseFloat(cleanValue);
+    
+    return isNaN(numericValue) ? 0 : numericValue;
   }
 }
 

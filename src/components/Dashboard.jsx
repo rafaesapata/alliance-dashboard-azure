@@ -30,8 +30,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadWorkItems();
-    // Atualizar a cada 5 minutos
-    const interval = setInterval(loadWorkItems, 5 * 60 * 1000);
+    // Atualizar a cada 60 segundos
+    const interval = setInterval(loadWorkItems, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
