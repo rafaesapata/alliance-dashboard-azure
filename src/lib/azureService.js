@@ -97,6 +97,30 @@ class AzureDevOpsService {
       const createdDate = new Date(item.fields['System.CreatedDate']);
       const modifiedDate = item.fields['System.ChangedDate'] ? new Date(item.fields['System.ChangedDate']) : null;
       
+      // Debug específico para work item 22677
+      if (item.id === 22677) {
+        console.log('🔍 DEBUG Work Item 22677:');
+        console.log('📋 Todos os campos disponíveis:', Object.keys(item.fields));
+        console.log('💰 Campos de valor encontrados:');
+        Object.keys(item.fields).forEach(key => {
+          if (key.toLowerCase().includes('valor') || key.toLowerCase().includes('value') || key.toLowerCase().includes('cash') || key.toLowerCase().includes('claim')) {
+            console.log(`  - ${key}: ${item.fields[key]}`);
+          }
+        });
+        console.log('🏢 Campos de cliente encontrados:');
+        Object.keys(item.fields).forEach(key => {
+          if (key.toLowerCase().includes('client') || key.toLowerCase().includes('customer') || key.toLowerCase().includes('empresa')) {
+            console.log(`  - ${key}: ${item.fields[key]}`);
+          }
+        });
+        console.log('📊 Campos customizados (Custom.*):');
+        Object.keys(item.fields).forEach(key => {
+          if (key.startsWith('Custom.') || key.includes('Custom')) {
+            console.log(`  - ${key}: ${item.fields[key]}`);
+          }
+        });
+      }
+      
       return {
         id: item.id,
         title: item.fields['System.Title'],
@@ -111,13 +135,21 @@ class AzureDevOpsService {
         tags: item.fields['System.Tags'] || '',
         url: item._links?.html?.href || '',
         type: item.fields['System.WorkItemType'], // Adicionar campo type para os ícones
-        // Campos customizados - nomes corretos da API Azure DevOps
+        // Campos customizados - testando diferentes variações de nomes
         valor: item.fields['Valor solicitado'] || 
-          (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
+          item.fields['Custom.Valor'] ||
+          item.fields['Custom.ValorSolicitado'] ||
+          item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
             `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 1000).toLocaleString('en-US')}.00` : 
-            'Não informado'),
-        cliente: item.fields['Custom.Cliente'] || item.fields['System.AreaPath']?.split('\\').pop() || 'Não informado',
+            'Não informado',
+        cliente: item.fields['Custom.Cliente'] || 
+          item.fields['Cliente'] ||
+          item.fields['Customer'] ||
+          item.fields['System.AreaPath']?.split('\\').pop() || 'Não informado',
         cashClaim: item.fields['Cash Claim'] || 
+          item.fields['Custom.CashClaim'] ||
+          item.fields['Custom.Cash Claim'] ||
+          item.fields['CashClaim'] ||
           (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
             `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 400).toLocaleString('en-US')}.00` : 
             'Não informado')
