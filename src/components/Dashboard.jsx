@@ -121,45 +121,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container fade-in">
       <div className="dashboard-content">
-        {/* Header */}
-        <div className="dashboard-header">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="dashboard-title">
-                Alliance Dashboard Azure
-              </h1>
-              <div className="dashboard-status">
-                <p className="dashboard-subtitle">
-                  Work Items - AWS Partnership
-                </p>
-                {usingMockData && (
-                  <div className="status-badge demo">
-                    <WifiOff className="w-4 h-4" />
-                    Modo Demonstração
-                  </div>
-                )}
-                {!usingMockData && (
-                  <div className="status-badge connected">
-                    <Wifi className="w-4 h-4" />
-                    Conectado
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="flex items-center text-sm text-gray-500 mb-2">
-                <Calendar className="w-4 h-4 mr-2" />
-                Última atualização: {lastUpdate.toLocaleString('pt-BR')}
-              </div>
-              {loading && (
-                <div className="flex items-center text-sm text-blue-600">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-3"></div>
-                  Atualizando...
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+
 
         {/* Estatísticas Principais */}
         <div className="stats-grid">
@@ -253,41 +215,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Team Performance */}
-        <div>
-          <Card className="bg-white tv-card">
-            <CardHeader>
-              <CardTitle className="flex items-center tv-text-lg">
-                <Users className="tv-icon-lg mr-3" />
-                Performance da Equipe
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="tv-grid-3 grid tv-gap">
-                {stats && Object.entries(stats.byAssignee)
-                  .sort(([,a], [,b]) => b - a)
-                  .slice(0, 6)
-                  .map(([assignee, count]) => (
-                  <div key={assignee} className="flex items-center justify-between p-6 bg-gray-50 rounded-xl">
-                    <div>
-                      <p className="font-medium tv-text-base">{assignee}</p>
-                      <p className="tv-text-sm text-gray-500">{count} work items</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="tv-text-lg font-bold text-blue-600">{count}</div>
-                      <div className="w-20 mt-2">
-                        <Progress 
-                          value={(count / Math.max(...Object.values(stats.byAssignee))) * 100} 
-                          className="tv-progress"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+
       </div>
     </div>
   );
