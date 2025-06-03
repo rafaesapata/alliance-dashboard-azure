@@ -1,4 +1,37 @@
-// Configuração para Azure DevOps API
+// Debug das variáveis de ambiente
+export const debugEnvVars = () => {
+  const envVars = {
+    VITE_ALLIANCE_AZURE_API_TOKEN: import.meta.env.VITE_ALLIANCE_AZURE_API_TOKEN,
+    VITE_ALLIANCE_AZURE_WORKSPACE_URL: import.meta.env.VITE_ALLIANCE_AZURE_WORKSPACE_URL,
+    VITE_ALLIANCE_AZURE_ORGANIZATION: import.meta.env.VITE_ALLIANCE_AZURE_ORGANIZATION,
+    VITE_ALLIANCE_AZURE_API_VERSION: import.meta.env.VITE_ALLIANCE_AZURE_API_VERSION,
+    VITE_ALLIANCE_AZURE_AREA_PATH_FILTER: import.meta.env.VITE_ALLIANCE_AZURE_AREA_PATH_FILTER
+  };
+
+  console.log('🔍 Debug - Variáveis de Ambiente:', envVars);
+  
+  // Verificar quais estão undefined
+  const undefined_vars = Object.entries(envVars)
+    .filter(([key, value]) => value === undefined)
+    .map(([key]) => key);
+    
+  if (undefined_vars.length > 0) {
+    console.warn('⚠️ Variáveis não definidas:', undefined_vars);
+  }
+  
+  // Verificar quais estão vazias
+  const empty_vars = Object.entries(envVars)
+    .filter(([key, value]) => value === '')
+    .map(([key]) => key);
+    
+  if (empty_vars.length > 0) {
+    console.warn('⚠️ Variáveis vazias:', empty_vars);
+  }
+  
+  return envVars;
+};
+
+// Configuração para Azure DevOps API com debug
 export const azureConfig = {
   apiToken: import.meta.env.VITE_ALLIANCE_AZURE_API_TOKEN,
   workspaceUrl: import.meta.env.VITE_ALLIANCE_AZURE_WORKSPACE_URL,
@@ -19,15 +52,30 @@ export const azureConfig = {
   })
 };
 
-// Validação de configuração
+// Validação de configuração melhorada
 export const validateConfig = () => {
+  console.log('🔍 Iniciando validação de configuração...');
+  
+  // Debug das variáveis
+  debugEnvVars();
+  
   const required = ['apiToken', 'workspaceUrl', 'organization'];
-  const missing = required.filter(key => !azureConfig[key]);
+  const missing = required.filter(key => {
+    const value = azureConfig[key];
+    const isEmpty = !value || value === '' || value === 'undefined';
+    if (isEmpty) {
+      console.error(`❌ Variável ${key} está vazia ou indefinida:`, value);
+    }
+    return isEmpty;
+  });
   
   if (missing.length > 0) {
-    throw new Error(`Configuração Azure DevOps incompleta. Faltam: ${missing.join(', ')}`);
+    const error = `Configuração Azure DevOps incompleta. Faltam: ${missing.join(', ')}`;
+    console.error('❌ Erro de validação:', error);
+    throw new Error(error);
   }
   
+  console.log('✅ Configuração validada com sucesso!');
   return true;
 };
 

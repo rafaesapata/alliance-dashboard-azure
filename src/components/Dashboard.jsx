@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import EnvDebugPanel from './EnvDebugPanel';
 import { 
   Activity, 
   Users, 
@@ -12,7 +13,8 @@ import {
   Calendar,
   Target,
   Wifi,
-  WifiOff
+  WifiOff,
+  Settings
 } from 'lucide-react';
 import azureService from '../lib/azureService';
 import { mockWorkItems, getMockStats } from '../lib/mockData';
@@ -24,6 +26,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [usingMockData, setUsingMockData] = useState(false);
+  const [showDebug, setShowDebug] = useState(false);
 
   useEffect(() => {
     loadWorkItems();
@@ -144,6 +147,13 @@ const Dashboard = () => {
                     Conectado
                   </Badge>
                 )}
+                <button
+                  onClick={() => setShowDebug(!showDebug)}
+                  className="flex items-center space-x-2 text-sm bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700"
+                >
+                  <Settings className="tv-icon" />
+                  <span>Debug</span>
+                </button>
               </div>
             </div>
             <div className="text-right">
@@ -160,6 +170,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
+        {/* Painel de Debug */}
+        {showDebug && <EnvDebugPanel />}
 
         {/* Estatísticas Principais */}
         <div className="tv-grid-4 grid tv-gap-lg mb-12">
