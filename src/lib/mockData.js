@@ -15,6 +15,7 @@ export const mockWorkItems = [
     tags: "authentication, aws, sso",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12345",
     valor: "$45,000.00",
+    oportunidade: "O7457652",
     cliente: "Petrobras",
     cashClaim: "$15,000.00"
   },
@@ -33,6 +34,7 @@ export const mockWorkItems = [
     tags: "bug, aws, lambda",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12346",
     valor: "$12,500.00",
+    oportunidade: "O7452073",
     cliente: "Vale",
     cashClaim: "$8,000.00"
   },
@@ -51,6 +53,7 @@ export const mockWorkItems = [
     tags: "documentation, api",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12347",
     valor: "$8,000.00",
+    oportunidade: "O7403128",
     cliente: "Banco do Brasil",
     cashClaim: "$3,200.00"
   },
@@ -69,6 +72,7 @@ export const mockWorkItems = [
     tags: "monitoring, cloudwatch, aws",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12348",
     valor: "$22,000.00",
+    oportunidade: "O7402909",
     cliente: "Itaú Unibanco",
     cashClaim: "$11,000.00"
   },
@@ -87,6 +91,7 @@ export const mockWorkItems = [
     tags: "performance, optimization",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12349",
     valor: "$18,500.00",
+    oportunidade: "O7397420",
     cliente: "Bradesco",
     cashClaim: "$7,400.00"
   },
@@ -105,6 +110,7 @@ export const mockWorkItems = [
     tags: "backup, s3, automation",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12350",
     valor: "$65,000.00",
+    oportunidade: "O7267022",
     cliente: "Caixa Econômica Federal",
     cashClaim: "$26,000.00"
   },
@@ -123,6 +129,7 @@ export const mockWorkItems = [
     tags: "testing, api-gateway, performance",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12351",
     valor: "$14,000.00",
+    oportunidade: "O7245891",
     cliente: "Santander",
     cashClaim: "$5,600.00"
   },
@@ -141,6 +148,7 @@ export const mockWorkItems = [
     tags: "security, alerts, monitoring",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12352",
     valor: "$35,000.00",
+    oportunidade: "O7234567",
     cliente: "Magazine Luiza",
     cashClaim: "$14,000.00"
   },
@@ -159,6 +167,7 @@ export const mockWorkItems = [
     tags: "migration, rds, database",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12353",
     valor: "$78,000.00",
+    oportunidade: "O7198765",
     cliente: "Embraer",
     cashClaim: "$31,200.00"
   },
@@ -177,6 +186,7 @@ export const mockWorkItems = [
     tags: "cache, redis, performance",
     url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12354",
     valor: "$25,000.00",
+    oportunidade: "O7156432",
     cliente: "JBS",
     cashClaim: "$10,000.00"
   }

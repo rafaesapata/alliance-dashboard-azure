@@ -273,6 +273,9 @@ const Dashboard = () => {
                 
                 <div className="alliance-recent-details">
                   <div className="alliance-recent-detail">
+                    <strong>Oportunidade:</strong> {item.oportunidade}
+                  </div>
+                  <div className="alliance-recent-detail">
                     <strong>Cliente:</strong> {item.cliente}
                   </div>
                   <div className="alliance-recent-detail">

@@ -135,13 +135,13 @@ class AzureDevOpsService {
         tags: item.fields['System.Tags'] || '',
         url: item._links?.html?.href || '',
         type: item.fields['System.WorkItemType'], // Adicionar campo type para os ícones
-        // Campos customizados - testando diferentes variações de nomes
-        valor: item.fields['Valor solicitado'] || 
-          item.fields['Custom.Valor'] ||
-          item.fields['Custom.ValorSolicitado'] ||
-          item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
+        // Campos customizados - nomes corretos conforme informado
+        valor: item.fields['Custom.Valorsolicitado'] ? 
+          `$${parseFloat(item.fields['Custom.Valorsolicitado']).toLocaleString('en-US')}.00` :
+          (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
             `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 1000).toLocaleString('en-US')}.00` : 
-            'Não informado',
+            'Não informado'),
+        oportunidade: item.fields['Custom.Oportunidade'] || 'Não informado',
         cliente: item.fields['Custom.Cliente'] || 
           item.fields['Cliente'] ||
           item.fields['Customer'] ||
