@@ -269,6 +269,10 @@ const Dashboard = () => {
                   </span>
                 </div>
                 
+                {/* Cliente como destaque principal */}
+                <div className="alliance-recent-client">{item.cliente}</div>
+                
+                {/* Valor em destaque */}
                 <div className="alliance-recent-value">{item.valor}</div>
                 
                 <div className="alliance-recent-details">
@@ -276,13 +280,17 @@ const Dashboard = () => {
                     <strong>Oportunidade:</strong> {item.oportunidade}
                   </div>
                   <div className="alliance-recent-detail">
-                    <strong>Cliente:</strong> {item.cliente}
-                  </div>
-                  <div className="alliance-recent-detail">
                     <strong>Responsável:</strong> {item.assignedTo}
                   </div>
-                  <div className="alliance-recent-detail">
-                    <strong>Cash Claim:</strong> {item.cashClaim}
+                  <div className="alliance-recent-detail alliance-cash-claim">
+                    <strong>Cash Claim:</strong> 
+                    <span className="alliance-cash-claim-value">
+                      {item.cashClaim}
+                      {(item.cashClaim?.toLowerCase().includes('disponível') || 
+                        item.cashClaim?.toLowerCase().includes('disponivel')) && (
+                        <span className="alliance-cash-available-icon">💰</span>
+                      )}
+                    </span>
                   </div>
                   <div className="alliance-recent-detail">
                     <strong>Modificado:</strong> {item.modifiedDate || item.createdDate}

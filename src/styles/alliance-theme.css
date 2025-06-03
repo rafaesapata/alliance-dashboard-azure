@@ -29,7 +29,7 @@
 .alliance-header {
   background: var(--alliance-blue-primary);
   color: white;
-  padding: 16px 0;
+  padding: 11px 0; /* Reduzido 30% de 16px para 11px */
   box-shadow: var(--alliance-shadow-md);
   position: sticky;
   top: 0;
@@ -481,5 +481,59 @@
 
 .alliance-animate:nth-child(4) {
   animation-delay: 0.3s;
+}
+
+
+/* Cliente em destaque */
+.alliance-recent-client {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--alliance-text-primary);
+  margin: 12px 0 8px 0;
+  line-height: 1.2;
+}
+
+/* Cash Claim com ícone especial */
+.alliance-cash-claim {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alliance-cash-claim-value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.alliance-cash-available-icon {
+  font-size: 1.2em;
+  animation: alliance-cash-pulse 2s infinite;
+  filter: drop-shadow(0 0 4px rgba(255, 193, 7, 0.6));
+}
+
+/* Animação para o ícone de cash disponível */
+@keyframes alliance-cash-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Ajuste no espaçamento dos work items para 12 items */
+@media (min-width: 1400px) {
+  .alliance-recent-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .alliance-recent-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 

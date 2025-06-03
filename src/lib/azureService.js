@@ -169,13 +169,12 @@ class AzureDevOpsService {
       byState: {},
       byType: {},
       byAssignee: {},
-      recentItems: workItems.slice(0, 10), // 10 mais recentes para duas colunas
+      recentItems: workItems.slice(0, 12), // 12 mais recentes para melhor aproveitamento da tela
       valorMes: 0,
       valorTrimestre: 0,
-      totalValue: 0
-    };
-
-    workItems.forEach(item => {
+      totalValue: 0,
+      totalCashClaim: 0
+    };tem => {
       // Por estado
       stats.byState[item.state] = (stats.byState[item.state] || 0) + 1;
       

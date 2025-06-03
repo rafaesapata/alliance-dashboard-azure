@@ -189,6 +189,44 @@ export const mockWorkItems = [
     oportunidade: "O7156432",
     cliente: "JBS",
     cashClaim: "$10,000.00"
+  },
+  {
+    id: 12355,
+    title: "Configurar pipeline CI/CD",
+    state: "New",
+    workItemType: "Task",
+    type: "Task",
+    assignedTo: "Rafael Santos",
+    createdDate: "25/04/2025",
+    modifiedDate: null,
+    createdDateObj: new Date("2025-04-25"),
+    areaPath: "AWS Partnership",
+    priority: "High",
+    tags: "devops, pipeline, automation",
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12355",
+    valor: "$32,000.00",
+    oportunidade: "O7134567",
+    cliente: "Ambev",
+    cashClaim: "Disponível"
+  },
+  {
+    id: 12356,
+    title: "Implementar logs estruturados",
+    state: "In Progress",
+    workItemType: "User Story",
+    type: "User Story",
+    assignedTo: "Camila Oliveira",
+    createdDate: "20/04/2025",
+    modifiedDate: "01/06/2025",
+    createdDateObj: new Date("2025-04-20"),
+    areaPath: "AWS Partnership",
+    priority: "Medium",
+    tags: "logging, observability, monitoring",
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12356",
+    valor: "$18,500.00",
+    oportunidade: "O7098765",
+    cliente: "Natura",
+    cashClaim: "Disponível"
   }
 ];
 
@@ -203,7 +241,7 @@ export const getMockStats = (workItems) => {
     byState: {},
     byType: {},
     byAssignee: {},
-    recentItems: workItems.slice(0, 10), // 10 mais recentes para duas colunas
+    recentItems: workItems.slice(0, 12), // 12 mais recentes para melhor aproveitamento da tela
     valorMes: 0,
     valorTrimestre: 0,
     totalValue: 0,
