@@ -1,251 +1,397 @@
-/* Estilos específicos para TV 55" e telas grandes */
-@import "tailwindcss";
-@import "tw-animate-css";
+/* Alliance Dashboard Azure - UDS Tecnologia Theme */
+@import './styles/uds-theme.css';
 
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+/* Reset e Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, var(--uds-blue-light) 0%, var(--uds-gray-100) 100%);
+  color: var(--uds-gray-900);
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Layout Principal */
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--uds-blue-light) 0%, var(--uds-gray-100) 100%);
+  padding: 32px;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+.dashboard-content {
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* Otimizações para TV 55" */
-@layer utilities {
-  /* Fontes maiores para melhor legibilidade em TV */
-  .tv-title {
-    font-size: 3.5rem;
-    line-height: 1.1;
-    font-weight: 800;
+/* Header */
+.dashboard-header {
+  margin-bottom: 32px;
+  padding: 24px 0;
+}
+
+.dashboard-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--uds-blue-primary);
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(33, 150, 243, 0.1);
+}
+
+.dashboard-subtitle {
+  font-size: 1.25rem;
+  color: var(--uds-gray-700);
+  margin-bottom: 24px;
+}
+
+.dashboard-status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--uds-radius-lg);
+  font-weight: 600;
+  font-size: 0.875rem;
+  box-shadow: var(--uds-shadow-sm);
+}
+
+.status-badge.connected {
+  background: var(--uds-green-light);
+  color: var(--uds-green);
+  border: 1px solid var(--uds-green);
+}
+
+.status-badge.demo {
+  background: var(--uds-orange-light);
+  color: var(--uds-orange);
+  border: 1px solid var(--uds-orange);
+}
+
+.debug-button {
+  background: var(--uds-gray-600);
+  color: white;
+  border: none;
+  border-radius: var(--uds-radius-md);
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.debug-button:hover {
+  background: var(--uds-gray-700);
+  transform: translateY(-1px);
+  box-shadow: var(--uds-shadow-sm);
+}
+
+/* Cards de Estatísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: var(--uds-radius-lg);
+  padding: 24px;
+  box-shadow: var(--uds-shadow-md);
+  border: 1px solid var(--uds-gray-200);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  box-shadow: var(--uds-shadow-lg);
+  transform: translateY(-4px);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--uds-gradient-primary);
+}
+
+.stat-card.green::before {
+  background: var(--uds-gradient-secondary);
+}
+
+.stat-card.orange::before {
+  background: var(--uds-gradient-accent);
+}
+
+.stat-card.purple::before {
+  background: linear-gradient(135deg, var(--uds-purple) 0%, var(--uds-indigo) 100%);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: between;
+  margin-bottom: 16px;
+}
+
+.stat-card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--uds-gray-700);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-card-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--uds-blue-primary);
+}
+
+.stat-card-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--uds-gray-900);
+  margin-bottom: 8px;
+}
+
+.stat-card-description {
+  font-size: 0.875rem;
+  color: var(--uds-gray-600);
+}
+
+/* Seções de Conteúdo */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.content-section {
+  background: white;
+  border-radius: var(--uds-radius-lg);
+  padding: 24px;
+  box-shadow: var(--uds-shadow-md);
+  border: 1px solid var(--uds-gray-200);
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--uds-gray-900);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--uds-blue-primary);
+}
+
+/* Lista de Work Items */
+.work-items-list {
+  space-y: 12px;
+}
+
+.work-item {
+  padding: 16px;
+  border: 1px solid var(--uds-gray-200);
+  border-radius: var(--uds-radius-md);
+  transition: all 0.3s ease;
+  background: var(--uds-gray-50);
+}
+
+.work-item:hover {
+  border-color: var(--uds-blue-primary);
+  background: white;
+  box-shadow: var(--uds-shadow-sm);
+}
+
+.work-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: between;
+  margin-bottom: 8px;
+}
+
+.work-item-id {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--uds-blue-primary);
+  background: var(--uds-blue-light);
+  padding: 4px 8px;
+  border-radius: var(--uds-radius-sm);
+}
+
+.work-item-title {
+  font-weight: 600;
+  color: var(--uds-gray-900);
+  margin-bottom: 4px;
+}
+
+.work-item-meta {
+  font-size: 0.875rem;
+  color: var(--uds-gray-600);
+}
+
+/* Progress Bars */
+.progress-container {
+  margin-bottom: 16px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--uds-gray-700);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--uds-gray-200);
+  border-radius: var(--uds-radius-sm);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--uds-gradient-primary);
+  border-radius: var(--uds-radius-sm);
+  transition: width 0.6s ease;
+}
+
+/* Footer */
+.dashboard-footer {
+  margin-top: 48px;
+  padding: 24px 0;
+  border-top: 1px solid var(--uds-gray-200);
+  background: white;
+  border-radius: var(--uds-radius-lg);
+  box-shadow: var(--uds-shadow-sm);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-info {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-text {
+  font-size: 0.875rem;
+  color: var(--uds-gray-600);
+}
+
+.footer-version {
+  font-weight: 600;
+  color: var(--uds-blue-primary);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
   }
   
-  .tv-subtitle {
-    font-size: 1.5rem;
-    line-height: 1.3;
+  .dashboard-container {
+    padding: 24px;
   }
   
-  .tv-card-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-  }
-  
-  .tv-metric {
+  .dashboard-title {
     font-size: 2.5rem;
-    font-weight: 800;
-    line-height: 1;
-  }
-  
-  .tv-text-lg {
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
-  
-  .tv-text-base {
-    font-size: 1.125rem;
-    line-height: 1.5;
-  }
-  
-  .tv-text-sm {
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-  
-  /* Espaçamentos otimizados para TV */
-  .tv-padding {
-    padding: 2rem;
-  }
-  
-  .tv-gap {
-    gap: 2rem;
-  }
-  
-  .tv-gap-lg {
-    gap: 3rem;
-  }
-  
-  /* Cards com bordas mais visíveis */
-  .tv-card {
-    border-radius: 1rem;
-    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    border: 2px solid rgba(0, 0, 0, 0.05);
-  }
-  
-  /* Badges maiores para TV */
-  .tv-badge {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-  }
-  
-  /* Progress bars mais visíveis */
-  .tv-progress {
-    height: 0.75rem;
-    border-radius: 0.375rem;
-  }
-  
-  /* Ícones maiores */
-  .tv-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-  
-  .tv-icon-lg {
-    width: 2rem;
-    height: 2rem;
   }
 }
 
-/* Media queries para diferentes resoluções de TV */
-@media (min-width: 1920px) {
-  .tv-container {
-    max-width: 1800px;
-    margin: 0 auto;
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
   
-  .tv-grid-4 {
-    grid-template-columns: repeat(4, 1fr);
+  .dashboard-container {
+    padding: 16px;
   }
   
-  .tv-grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .tv-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 3840px) {
-  /* 4K TV adjustments */
-  .tv-title {
-    font-size: 5rem;
-  }
-  
-  .tv-subtitle {
+  .dashboard-title {
     font-size: 2rem;
   }
   
-  .tv-metric {
-    font-size: 3.5rem;
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
   }
-  
-  .tv-padding {
-    padding: 3rem;
+}
+
+/* Estados de Loading */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--uds-gray-200) 25%,
+    var(--uds-gray-100) 50%,
+    var(--uds-gray-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
   }
-  
-  .tv-gap-lg {
-    gap: 4rem;
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Animações de Entrada */
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

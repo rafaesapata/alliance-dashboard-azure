@@ -10,7 +10,10 @@ export const mockWorkItems = [
     areaPath: "AWS Partnership",
     priority: "High",
     tags: "authentication, aws, sso",
-    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12345"
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12345",
+    valor: "$45,000.00",
+    cliente: "Petrobras",
+    cashClaim: "$15,000.00"
   },
   {
     id: 12346,
@@ -22,7 +25,10 @@ export const mockWorkItems = [
     areaPath: "AWS Partnership",
     priority: "Critical",
     tags: "bug, aws, lambda",
-    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12346"
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12346",
+    valor: "$12,500.00",
+    cliente: "Vale",
+    cashClaim: "$8,000.00"
   },
   {
     id: 12347,
@@ -34,7 +40,10 @@ export const mockWorkItems = [
     areaPath: "AWS Partnership",
     priority: "Medium",
     tags: "documentation, api",
-    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12347"
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12347",
+    valor: "$8,000.00",
+    cliente: "Banco do Brasil",
+    cashClaim: "$3,200.00"
   },
   {
     id: 12348,
@@ -46,7 +55,10 @@ export const mockWorkItems = [
     areaPath: "AWS Partnership",
     priority: "Low",
     tags: "monitoring, cloudwatch, aws",
-    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12348"
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12348",
+    valor: "$22,000.00",
+    cliente: "Itaú Unibanco",
+    cashClaim: "$11,000.00"
   },
   {
     id: 12349,
@@ -58,7 +70,10 @@ export const mockWorkItems = [
     areaPath: "AWS Partnership",
     priority: "Medium",
     tags: "performance, optimization",
-    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12349"
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12349",
+    valor: "$18,500.00",
+    cliente: "Bradesco",
+    cashClaim: "$7,400.00"
   },
   {
     id: 12350,
@@ -70,7 +85,10 @@ export const mockWorkItems = [
     areaPath: "AWS Partnership",
     priority: "High",
     tags: "backup, s3, automation",
-    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12350"
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12350",
+    valor: "$65,000.00",
+    cliente: "Caixa Econômica Federal",
+    cashClaim: "$26,000.00"
   },
   {
     id: 12351,
@@ -82,7 +100,10 @@ export const mockWorkItems = [
     areaPath: "AWS Partnership",
     priority: "Medium",
     tags: "testing, api-gateway, performance",
-    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12351"
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12351",
+    valor: "$14,000.00",
+    cliente: "Santander",
+    cashClaim: "$5,600.00"
   },
   {
     id: 12352,
@@ -94,7 +115,10 @@ export const mockWorkItems = [
     areaPath: "AWS Partnership",
     priority: "Critical",
     tags: "security, alerts, monitoring",
-    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12352"
+    url: "https://dev.azure.com/uds-tecnologia/_workitems/edit/12352",
+    valor: "$35,000.00",
+    cliente: "Magazine Luiza",
+    cashClaim: "$14,000.00"
   }
 ];
 
@@ -104,7 +128,15 @@ export const getMockStats = (workItems) => {
     byState: {},
     byType: {},
     byAssignee: {},
-    recentItems: workItems.slice(0, 5)
+    recentItems: workItems.slice(0, 5),
+    totalValue: workItems.reduce((sum, item) => {
+      const value = parseFloat(item.valor.replace(/[$\s,]/g, '')) || 0;
+      return sum + value;
+    }, 0),
+    totalCashClaim: workItems.reduce((sum, item) => {
+      const cashClaim = parseFloat(item.cashClaim.replace(/[$\s,]/g, '')) || 0;
+      return sum + cashClaim;
+    }, 0)
   };
 
   workItems.forEach(item => {

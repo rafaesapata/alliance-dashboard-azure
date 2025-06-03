@@ -122,47 +122,47 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 tv-padding">
-      <div className="tv-container">
+    <div className="dashboard-container fade-in">
+      <div className="dashboard-content">
         {/* Header */}
-        <div className="mb-8">
+        <div className="dashboard-header">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="tv-title text-gray-900 mb-4">
+              <h1 className="dashboard-title">
                 Alliance Dashboard Azure
               </h1>
-              <div className="flex items-center space-x-6">
-                <p className="text-gray-600 tv-subtitle">
+              <div className="dashboard-status">
+                <p className="dashboard-subtitle">
                   Work Items - AWS Partnership
                 </p>
                 {usingMockData && (
-                  <Badge variant="secondary" className="tv-badge bg-yellow-100 text-yellow-800 border-yellow-300">
-                    <WifiOff className="tv-icon mr-2" />
+                  <div className="status-badge demo">
+                    <WifiOff className="w-4 h-4" />
                     Modo Demonstração
-                  </Badge>
+                  </div>
                 )}
                 {!usingMockData && (
-                  <Badge variant="secondary" className="tv-badge bg-green-100 text-green-800 border-green-300">
-                    <Wifi className="tv-icon mr-2" />
+                  <div className="status-badge connected">
+                    <Wifi className="w-4 h-4" />
                     Conectado
-                  </Badge>
+                  </div>
                 )}
                 <button
                   onClick={() => setShowDebug(!showDebug)}
-                  className="flex items-center space-x-2 text-sm bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700"
+                  className="debug-button"
                 >
-                  <Settings className="tv-icon" />
+                  <Settings className="w-4 h-4" />
                   <span>Debug</span>
                 </button>
               </div>
             </div>
             <div className="text-right">
-              <div className="flex items-center tv-text-base text-gray-500 mb-2">
-                <Calendar className="tv-icon mr-2" />
+              <div className="flex items-center text-sm text-gray-500 mb-2">
+                <Calendar className="w-4 h-4 mr-2" />
                 Última atualização: {lastUpdate.toLocaleString('pt-BR')}
               </div>
               {loading && (
-                <div className="flex items-center tv-text-base text-blue-600">
+                <div className="flex items-center text-sm text-blue-600">
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-3"></div>
                   Atualizando...
                 </div>
@@ -175,125 +175,95 @@ const Dashboard = () => {
         {showDebug && <EnvDebugPanel />}
 
         {/* Estatísticas Principais */}
-        <div className="tv-grid-4 grid tv-gap-lg mb-12">
-          <Card className="bg-white tv-card">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="tv-card-title">Total de Items</CardTitle>
-              <Activity className="tv-icon-lg text-blue-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="tv-metric text-blue-600">{stats?.total || 0}</div>
-              <p className="tv-text-sm text-gray-500 mt-2">Work items ativos</p>
-            </CardContent>
-          </Card>
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-card-header">
+              <div className="stat-card-title">Total de Items</div>
+              <Activity className="stat-card-icon" />
+            </div>
+            <div className="stat-card-value">{stats?.total || 0}</div>
+            <div className="stat-card-description">Work items ativos</div>
+          </div>
 
-          <Card className="bg-white tv-card">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="tv-card-title">Em Progresso</CardTitle>
-              <Clock className="tv-icon-lg text-orange-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="tv-metric text-orange-600">
-                {(stats?.byState['Active'] || 0) + (stats?.byState['In Progress'] || 0)}
-              </div>
-              <p className="tv-text-sm text-gray-500 mt-2">Items em desenvolvimento</p>
-            </CardContent>
-          </Card>
+          <div className="stat-card orange">
+            <div className="stat-card-header">
+              <div className="stat-card-title">Em Progresso</div>
+              <Clock className="stat-card-icon" />
+            </div>
+            <div className="stat-card-value">
+              {(stats?.byState['Active'] || 0) + (stats?.byState['In Progress'] || 0)}
+            </div>
+            <div className="stat-card-description">Items em desenvolvimento</div>
+          </div>
 
-          <Card className="bg-white tv-card">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="tv-card-title">Concluídos</CardTitle>
-              <CheckCircle className="tv-icon-lg text-green-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="tv-metric text-green-600">
-                {(stats?.byState['Done'] || 0) + (stats?.byState['Closed'] || 0)}
-              </div>
-              <p className="tv-text-sm text-gray-500 mt-2">Items finalizados</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white tv-card">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-              <CardTitle className="tv-card-title">Bugs</CardTitle>
-              <AlertCircle className="tv-icon-lg text-red-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="tv-metric text-red-600">
-                {stats?.byType['Bug'] || 0}
-              </div>
-              <p className="tv-text-sm text-gray-500 mt-2">Bugs reportados</p>
-            </CardContent>
-          </Card>
+          <div className="stat-card green">
+            <div className="stat-card-header">
+              <div className="stat-card-title">Concluídos</div>
+              <CheckCircle className="stat-card-icon" />
+            </div>
+            <div className="stat-card-value">
+              {(stats?.byState['Done'] || 0) + (stats?.byState['Closed'] || 0)}
+            </div>
+            <div className="stat-card-description">Items finalizados</div>
+          </div>
         </div>
 
         {/* Gráficos e Listas */}
-        <div className="tv-grid-2 grid tv-gap-lg mb-12">
+        <div className="content-grid">
           {/* Status Distribution */}
-          <Card className="bg-white tv-card">
-            <CardHeader>
-              <CardTitle className="flex items-center tv-text-lg">
-                <TrendingUp className="tv-icon-lg mr-3" />
-                Distribuição por Status
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {stats && Object.entries(stats.byState).map(([state, count]) => (
-                  <div key={state} className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <div className={`w-4 h-4 rounded-full ${getStateColor(state)} mr-4`}></div>
-                      <span className="tv-text-base font-medium">{state}</span>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <span className="tv-text-base text-gray-600 font-semibold">{count}</span>
-                      <div className="w-32">
-                        <Progress 
-                          value={(count / stats.total) * 100} 
-                          className="tv-progress"
-                        />
-                      </div>
-                    </div>
+          <div className="content-section">
+            <div className="section-title">
+              <TrendingUp className="section-icon" />
+              Distribuição por Status
+            </div>
+            <div className="space-y-6">
+              {stats && Object.entries(stats.byState).map(([state, count]) => (
+                <div key={state} className="progress-container">
+                  <div className="progress-label">
+                    <span>{state}</span>
+                    <span>{count}</span>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  <div className="progress-bar">
+                    <div 
+                      className="progress-fill"
+                      style={{ width: `${(count / Math.max(...Object.values(stats.byState))) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Recent Items */}
-          <Card className="bg-white tv-card">
-            <CardHeader>
-              <CardTitle className="flex items-center tv-text-lg">
-                <Clock className="tv-icon-lg mr-3" />
-                Items Recentes
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {stats?.recentItems?.slice(0, 5).map((item) => (
-                  <div key={item.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                    <div className="flex items-center space-x-4">
-                      {getTypeIcon(item.workItemType)}
-                      <div>
-                        <p className="tv-text-base font-medium truncate max-w-md">
-                          {item.title}
-                        </p>
-                        <p className="tv-text-sm text-gray-500">
-                          #{item.id} • {item.assignedTo}
-                        </p>
-                      </div>
-                    </div>
-                    <Badge 
-                      variant="secondary" 
-                      className={`tv-badge ${getStateColor(item.state)} text-white`}
-                    >
+          <div className="content-section">
+            <div className="section-title">
+              <Clock className="section-icon" />
+              Items Recentes
+            </div>
+            <div className="work-items-list">
+              {stats?.recentItems?.slice(0, 5).map((item) => (
+                <div key={item.id} className="work-item">
+                  <div className="work-item-header">
+                    <div className="work-item-id">#{item.id}</div>
+                    <div className={`status-badge ${getStateColor(item.state)}`}>
                       {item.state}
-                    </Badge>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  <div className="work-item-title">{item.title}</div>
+                  <div className="work-item-meta">
+                    <div className="flex items-center justify-between mb-2">
+                      <span><strong>Responsável:</strong> {item.assignedTo}</span>
+                      <span><strong>Cliente:</strong> {item.cliente}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span><strong>Valor:</strong> <span className="text-green-600 font-semibold">{item.valor}</span></span>
+                      <span><strong>Cash Claim:</strong> <span className="text-blue-600 font-semibold">{item.cashClaim}</span></span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Team Performance */}

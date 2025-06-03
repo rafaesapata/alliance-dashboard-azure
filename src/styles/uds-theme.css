@@ -1,0 +1,246 @@
+/* Identidade Visual UDS Tecnologia */
+
+:root {
+  /* Cores Principais UDS */
+  --uds-blue-primary: #2196F3;
+  --uds-blue-secondary: #1976D2;
+  --uds-blue-light: #BBDEFB;
+  --uds-blue-dark: #0D47A1;
+  
+  /* Paleta Colorida UDS */
+  --uds-green: #4CAF50;
+  --uds-green-light: #C8E6C9;
+  --uds-orange: #FF9800;
+  --uds-orange-light: #FFE0B2;
+  --uds-purple: #9C27B0;
+  --uds-purple-light: #E1BEE7;
+  --uds-pink: #E91E63;
+  --uds-pink-light: #F8BBD9;
+  --uds-teal: #009688;
+  --uds-teal-light: #B2DFDB;
+  --uds-indigo: #673AB7;
+  --uds-indigo-light: #D1C4E9;
+  
+  /* Cores Neutras */
+  --uds-gray-50: #FAFAFA;
+  --uds-gray-100: #F5F5F5;
+  --uds-gray-200: #EEEEEE;
+  --uds-gray-300: #E0E0E0;
+  --uds-gray-400: #BDBDBD;
+  --uds-gray-500: #9E9E9E;
+  --uds-gray-600: #757575;
+  --uds-gray-700: #616161;
+  --uds-gray-800: #424242;
+  --uds-gray-900: #212121;
+  
+  /* Gradientes UDS */
+  --uds-gradient-primary: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  --uds-gradient-secondary: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  --uds-gradient-accent: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  
+  /* Sombras UDS */
+  --uds-shadow-sm: 0 1px 3px rgba(33, 150, 243, 0.12), 0 1px 2px rgba(33, 150, 243, 0.24);
+  --uds-shadow-md: 0 4px 6px rgba(33, 150, 243, 0.12), 0 2px 4px rgba(33, 150, 243, 0.08);
+  --uds-shadow-lg: 0 10px 15px rgba(33, 150, 243, 0.12), 0 4px 6px rgba(33, 150, 243, 0.08);
+  --uds-shadow-xl: 0 20px 25px rgba(33, 150, 243, 0.12), 0 10px 10px rgba(33, 150, 243, 0.04);
+  
+  /* Bordas UDS */
+  --uds-radius-sm: 4px;
+  --uds-radius-md: 8px;
+  --uds-radius-lg: 12px;
+  --uds-radius-xl: 16px;
+  --uds-radius-2xl: 24px;
+}
+
+/* Classes Utilitárias UDS */
+.uds-bg-primary {
+  background: var(--uds-gradient-primary);
+}
+
+.uds-bg-secondary {
+  background: var(--uds-gradient-secondary);
+}
+
+.uds-bg-accent {
+  background: var(--uds-gradient-accent);
+}
+
+.uds-text-primary {
+  color: var(--uds-blue-primary);
+}
+
+.uds-text-secondary {
+  color: var(--uds-gray-700);
+}
+
+.uds-card {
+  background: white;
+  border-radius: var(--uds-radius-lg);
+  box-shadow: var(--uds-shadow-md);
+  border: 1px solid var(--uds-gray-200);
+  transition: all 0.3s ease;
+}
+
+.uds-card:hover {
+  box-shadow: var(--uds-shadow-lg);
+  transform: translateY(-2px);
+}
+
+.uds-button-primary {
+  background: var(--uds-gradient-primary);
+  color: white;
+  border: none;
+  border-radius: var(--uds-radius-md);
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: var(--uds-shadow-sm);
+}
+
+.uds-button-primary:hover {
+  box-shadow: var(--uds-shadow-md);
+  transform: translateY(-1px);
+}
+
+.uds-badge-green {
+  background: var(--uds-green-light);
+  color: var(--uds-green);
+  border: 1px solid var(--uds-green);
+}
+
+.uds-badge-orange {
+  background: var(--uds-orange-light);
+  color: var(--uds-orange);
+  border: 1px solid var(--uds-orange);
+}
+
+.uds-badge-purple {
+  background: var(--uds-purple-light);
+  color: var(--uds-purple);
+  border: 1px solid var(--uds-purple);
+}
+
+.uds-badge-pink {
+  background: var(--uds-pink-light);
+  color: var(--uds-pink);
+  border: 1px solid var(--uds-pink);
+}
+
+.uds-badge-teal {
+  background: var(--uds-teal-light);
+  color: var(--uds-teal);
+  border: 1px solid var(--uds-teal);
+}
+
+.uds-badge-indigo {
+  background: var(--uds-indigo-light);
+  color: var(--uds-indigo);
+  border: 1px solid var(--uds-indigo);
+}
+
+/* Tipografia UDS */
+.uds-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  color: var(--uds-gray-900);
+  line-height: 1.2;
+}
+
+.uds-subtitle {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  color: var(--uds-gray-700);
+  line-height: 1.4;
+}
+
+.uds-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  color: var(--uds-gray-600);
+  line-height: 1.6;
+}
+
+/* Layout UDS */
+.uds-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.uds-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.uds-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.uds-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.uds-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .uds-grid-2,
+  .uds-grid-3,
+  .uds-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .uds-container {
+    padding: 0 16px;
+  }
+}
+
+/* Animações UDS */
+@keyframes uds-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.uds-animate-fade-in {
+  animation: uds-fade-in 0.6s ease-out;
+}
+
+/* Estados de Loading UDS */
+.uds-loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.uds-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(33, 150, 243, 0.2),
+    transparent
+  );
+  animation: uds-shimmer 1.5s infinite;
+}
+
+@keyframes uds-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+

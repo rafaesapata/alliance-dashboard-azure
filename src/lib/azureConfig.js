@@ -36,7 +36,7 @@ export const azureConfig = {
   apiToken: import.meta.env.VITE_ALLIANCE_AZURE_API_TOKEN,
   workspaceUrl: import.meta.env.VITE_ALLIANCE_AZURE_WORKSPACE_URL,
   organization: import.meta.env.VITE_ALLIANCE_AZURE_ORGANIZATION,
-  apiVersion: import.meta.env.VITE_ALLIANCE_AZURE_API_VERSION || '7.2',
+  apiVersion: import.meta.env.VITE_ALLIANCE_AZURE_API_VERSION || '7.1',
   areaPathFilter: import.meta.env.VITE_ALLIANCE_AZURE_AREA_PATH_FILTER || 'AWS Partnership',
   
   // URLs base para diferentes endpoints

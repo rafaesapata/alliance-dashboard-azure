@@ -103,7 +103,15 @@ class AzureDevOpsService {
       areaPath: item.fields['System.AreaPath'],
       priority: item.fields['Microsoft.VSTS.Common.Priority'] || 'Não definida',
       tags: item.fields['System.Tags'] || '',
-      url: item._links?.html?.href || ''
+      url: item._links?.html?.href || '',
+      // Campos customizados - podem não existir na API real
+      valor: item.fields['Custom.Valor'] || item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
+        `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 1000).toLocaleString('en-US')}.00` : 
+        'Não informado',
+      cliente: item.fields['Custom.Cliente'] || item.fields['System.AreaPath']?.split('\\').pop() || 'Não informado',
+      cashClaim: item.fields['Custom.CashClaim'] || item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
+        `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 400).toLocaleString('en-US')}.00` : 
+        'Não informado'
     }));
   }
 
