@@ -13,8 +13,7 @@ import {
   Calendar,
   Target,
   Wifi,
-  WifiOff,
-  Settings
+  WifiOff
 } from 'lucide-react';
 import azureService from '../lib/azureService';
 import { mockWorkItems, getMockStats } from '../lib/mockData';
