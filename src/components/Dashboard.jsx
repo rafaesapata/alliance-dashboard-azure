@@ -272,6 +272,11 @@ const Dashboard = () => {
                 {/* Cliente como destaque principal */}
                 <div className="alliance-recent-client">{item.cliente}</div>
                 
+                {/* Título do work item */}
+                <div className="alliance-recent-title">
+                  {item.title.length > 60 ? `${item.title.substring(0, 60)}...` : item.title}
+                </div>
+                
                 {/* Valor em destaque */}
                 <div className="alliance-recent-value">{item.valor}</div>
                 
