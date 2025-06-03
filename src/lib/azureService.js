@@ -8,51 +8,85 @@ class AzureDevOpsService {
   // Buscar work items usando WIQL (Work Item Query Language)
   async getWorkItemsByAreaPath(areaPath = azureConfig.areaPathFilter) {
     try {
+      console.log('🔍 Iniciando busca de work items...');
+      console.log('📍 Area Path:', areaPath);
+      console.log('🌐 Base URL:', azureConfig.getBaseUrl());
+      
       // Query WIQL para buscar work items por Area Path
       const wiqlQuery = {
         query: `SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], [System.CreatedDate], [System.WorkItemType], [System.AreaPath] FROM WorkItems WHERE [System.AreaPath] UNDER '${areaPath}' ORDER BY [System.CreatedDate] DESC`
       };
 
+      console.log('📝 Query WIQL:', wiqlQuery.query);
+
       // Primeira chamada: executar query WIQL
-      const wiqlResponse = await fetch(`${azureConfig.getWiqlUrl()}?api-version=${azureConfig.apiVersion}`, {
+      const wiqlUrl = `${azureConfig.getWiqlUrl()}?api-version=${azureConfig.apiVersion}`;
+      console.log('🔗 URL WIQL:', wiqlUrl);
+      
+      const wiqlResponse = await fetch(wiqlUrl, {
         method: 'POST',
         headers: azureConfig.getHeaders(),
         body: JSON.stringify(wiqlQuery)
       });
 
+      console.log('📡 Resposta WIQL Status:', wiqlResponse.status);
+      console.log('📡 Resposta WIQL Headers:', Object.fromEntries(wiqlResponse.headers.entries()));
+
       if (!wiqlResponse.ok) {
-        throw new Error(`Erro na query WIQL: ${wiqlResponse.status} ${wiqlResponse.statusText}`);
+        const errorText = await wiqlResponse.text();
+        console.error('❌ Erro na query WIQL:', {
+          status: wiqlResponse.status,
+          statusText: wiqlResponse.statusText,
+          body: errorText
+        });
+        throw new Error(`Erro na query WIQL: ${wiqlResponse.status} ${wiqlResponse.statusText} - ${errorText}`);
       }
 
       const wiqlResult = await wiqlResponse.json();
+      console.log('✅ Resultado WIQL:', wiqlResult);
       
       if (!wiqlResult.workItems || wiqlResult.workItems.length === 0) {
+        console.log('⚠️ Nenhum work item encontrado para a Area Path:', areaPath);
         return [];
       }
 
       // Extrair IDs dos work items
       const workItemIds = wiqlResult.workItems.map(wi => wi.id);
+      console.log('🔢 IDs dos work items encontrados:', workItemIds);
       
       // Segunda chamada: buscar detalhes dos work items
-      const workItemsResponse = await fetch(
-        `${azureConfig.getWorkItemsUrl()}?ids=${workItemIds.join(',')}&$expand=all&api-version=${azureConfig.apiVersion}`,
-        {
-          method: 'GET',
-          headers: azureConfig.getHeaders()
-        }
-      );
+      const workItemsUrl = `${azureConfig.getWorkItemsUrl()}?ids=${workItemIds.join(',')}&$expand=all&api-version=${azureConfig.apiVersion}`;
+      console.log('🔗 URL Work Items:', workItemsUrl);
+      
+      const workItemsResponse = await fetch(workItemsUrl, {
+        method: 'GET',
+        headers: azureConfig.getHeaders()
+      });
+
+      console.log('📡 Resposta Work Items Status:', workItemsResponse.status);
 
       if (!workItemsResponse.ok) {
-        throw new Error(`Erro ao buscar work items: ${workItemsResponse.status} ${workItemsResponse.statusText}`);
+        const errorText = await workItemsResponse.text();
+        console.error('❌ Erro ao buscar work items:', {
+          status: workItemsResponse.status,
+          statusText: workItemsResponse.statusText,
+          body: errorText
+        });
+        throw new Error(`Erro ao buscar work items: ${workItemsResponse.status} ${workItemsResponse.statusText} - ${errorText}`);
       }
 
       const workItemsResult = await workItemsResponse.json();
+      console.log('✅ Work items detalhados:', workItemsResult);
       
       // Processar e formatar os dados
-      return this.formatWorkItems(workItemsResult.value || []);
+      const formattedItems = this.formatWorkItems(workItemsResult.value || []);
+      console.log('🎯 Work items formatados:', formattedItems);
+      
+      return formattedItems;
       
     } catch (error) {
-      console.error('Erro ao buscar work items:', error);
+      console.error('💥 Erro geral ao buscar work items:', error);
+      console.error('📊 Stack trace:', error.stack);
       throw error;
     }
   }
@@ -97,26 +131,103 @@ class AzureDevOpsService {
     return stats;
   }
 
-  // Testar conexão com a API
+  // Testar conexão com a API - versão melhorada
   async testConnection() {
     try {
+      console.log('🧪 Testando conexão com Azure DevOps...');
+      console.log('🔗 URL de teste:', `${azureConfig.getBaseUrl()}/projects?api-version=${azureConfig.apiVersion}`);
+      console.log('🔑 Headers:', azureConfig.getHeaders());
+      
       const response = await fetch(`${azureConfig.getBaseUrl()}/projects?api-version=${azureConfig.apiVersion}`, {
         method: 'GET',
         headers: azureConfig.getHeaders()
       });
 
-      return {
-        success: response.ok,
-        status: response.status,
-        message: response.ok ? 'Conexão bem-sucedida' : `Erro: ${response.statusText}`
-      };
+      console.log('📡 Status da conexão:', response.status);
+      console.log('📡 Headers da resposta:', Object.fromEntries(response.headers.entries()));
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('✅ Conexão bem-sucedida! Projetos encontrados:', data.count);
+        return {
+          success: true,
+          status: response.status,
+          message: `Conexão bem-sucedida! ${data.count} projetos encontrados.`,
+          data: data
+        };
+      } else {
+        const errorText = await response.text();
+        console.error('❌ Erro na conexão:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorText
+        });
+        return {
+          success: false,
+          status: response.status,
+          message: `Erro: ${response.status} ${response.statusText} - ${errorText}`,
+          error: errorText
+        };
+      }
     } catch (error) {
+      console.error('💥 Erro de conexão:', error);
       return {
         success: false,
         status: 0,
-        message: `Erro de conexão: ${error.message}`
+        message: `Erro de conexão: ${error.message}`,
+        error: error.message
       };
     }
+  }
+
+  // Verificar se a Area Path existe
+  async checkAreaPath(areaPath = azureConfig.areaPathFilter) {
+    try {
+      console.log('🔍 Verificando se Area Path existe:', areaPath);
+      
+      // Buscar classificações de área (area paths)
+      const response = await fetch(
+        `${azureConfig.getBaseUrl()}/wit/classificationnodes/areas?api-version=${azureConfig.apiVersion}&$depth=10`,
+        {
+          method: 'GET',
+          headers: azureConfig.getHeaders()
+        }
+      );
+
+      if (!response.ok) {
+        console.error('❌ Erro ao buscar area paths:', response.status, response.statusText);
+        return { exists: false, error: `${response.status} ${response.statusText}` };
+      }
+
+      const data = await response.json();
+      console.log('📁 Area paths disponíveis:', data);
+      
+      // Verificar se a area path existe (busca recursiva)
+      const exists = this.findAreaPathInTree(data, areaPath);
+      console.log(`📍 Area Path '${areaPath}' ${exists ? 'encontrada' : 'não encontrada'}`);
+      
+      return { exists, data };
+    } catch (error) {
+      console.error('💥 Erro ao verificar area path:', error);
+      return { exists: false, error: error.message };
+    }
+  }
+
+  // Buscar area path na árvore de classificações
+  findAreaPathInTree(node, targetPath) {
+    if (node.name === targetPath || node.path === targetPath) {
+      return true;
+    }
+    
+    if (node.children) {
+      for (const child of node.children) {
+        if (this.findAreaPathInTree(child, targetPath)) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
   }
 }
 
