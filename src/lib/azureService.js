@@ -93,29 +93,36 @@ class AzureDevOpsService {
 
   // Formatar dados dos work items para o dashboard
   formatWorkItems(workItems) {
-    return workItems.map(item => ({
-      id: item.id,
-      title: item.fields['System.Title'],
-      state: item.fields['System.State'],
-      workItemType: item.fields['System.WorkItemType'],
-      assignedTo: item.fields['System.AssignedTo']?.displayName || 'Não atribuído',
-      createdDate: new Date(item.fields['System.CreatedDate']),
-      modifiedDate: item.fields['System.ChangedDate'] ? new Date(item.fields['System.ChangedDate']) : null,
-      areaPath: item.fields['System.AreaPath'],
-      priority: item.fields['Microsoft.VSTS.Common.Priority'] || 'Não definida',
-      tags: item.fields['System.Tags'] || '',
-      url: item._links?.html?.href || '',
-      // Campos customizados - nomes corretos da API Azure DevOps
-      valor: item.fields['Valor solicitado'] || 
-        (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
-          `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 1000).toLocaleString('en-US')}.00` : 
-          'Não informado'),
-      cliente: item.fields['Custom.Cliente'] || item.fields['System.AreaPath']?.split('\\').pop() || 'Não informado',
-      cashClaim: item.fields['Cash Claim'] || 
-        (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
-          `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 400).toLocaleString('en-US')}.00` : 
-          'Não informado')
-    }));
+    return workItems.map(item => {
+      const createdDate = new Date(item.fields['System.CreatedDate']);
+      const modifiedDate = item.fields['System.ChangedDate'] ? new Date(item.fields['System.ChangedDate']) : null;
+      
+      return {
+        id: item.id,
+        title: item.fields['System.Title'],
+        state: item.fields['System.State'],
+        workItemType: item.fields['System.WorkItemType'],
+        assignedTo: item.fields['System.AssignedTo']?.displayName || 'Não atribuído',
+        createdDate: createdDate.toLocaleDateString('pt-BR'),
+        modifiedDate: modifiedDate ? modifiedDate.toLocaleDateString('pt-BR') : null,
+        createdDateObj: createdDate, // Para cálculos internos
+        areaPath: item.fields['System.AreaPath'],
+        priority: item.fields['Microsoft.VSTS.Common.Priority'] || 'Não definida',
+        tags: item.fields['System.Tags'] || '',
+        url: item._links?.html?.href || '',
+        type: item.fields['System.WorkItemType'], // Adicionar campo type para os ícones
+        // Campos customizados - nomes corretos da API Azure DevOps
+        valor: item.fields['Valor solicitado'] || 
+          (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
+            `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 1000).toLocaleString('en-US')}.00` : 
+            'Não informado'),
+        cliente: item.fields['Custom.Cliente'] || item.fields['System.AreaPath']?.split('\\').pop() || 'Não informado',
+        cashClaim: item.fields['Cash Claim'] || 
+          (item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] ? 
+            `$${(item.fields['Microsoft.VSTS.Scheduling.StoryPoints'] * 400).toLocaleString('en-US')}.00` : 
+            'Não informado')
+      };
+    });
   }
 
   // Obter estatísticas dos work items
@@ -130,7 +137,7 @@ class AzureDevOpsService {
       byState: {},
       byType: {},
       byAssignee: {},
-      recentItems: workItems.slice(0, 5), // 5 mais recentes
+      recentItems: workItems.slice(0, 10), // 10 mais recentes para duas colunas
       valorMes: 0,
       valorTrimestre: 0,
       totalValue: 0
@@ -150,8 +157,8 @@ class AzureDevOpsService {
       const itemValue = this.parseValueToNumber(item.valor);
       stats.totalValue += itemValue;
       
-      // Verificar se é do mês atual
-      const itemDate = new Date(item.createdDate);
+      // Verificar se é do mês atual - usar createdDateObj para cálculos
+      const itemDate = item.createdDateObj || new Date(item.createdDate);
       if (itemDate.getMonth() === currentMonth && itemDate.getFullYear() === currentYear) {
         stats.valorMes += itemValue;
       }
