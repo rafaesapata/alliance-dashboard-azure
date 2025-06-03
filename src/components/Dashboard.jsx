@@ -157,61 +157,66 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Gráficos e Listas */}
-        <div className="content-grid">
-          {/* Status Distribution */}
-          <div className="content-section">
-            <div className="section-title">
-              <TrendingUp className="section-icon" />
-              Distribuição por Status
-            </div>
-            <div className="space-y-6">
-              {stats && Object.entries(stats.byState).map(([state, count]) => (
-                <div key={state} className="progress-container">
-                  <div className="progress-label">
-                    <span>{state}</span>
-                    <span>{count}</span>
-                  </div>
-                  <div className="progress-bar">
-                    <div 
-                      className="progress-fill"
-                      style={{ width: `${(count / Math.max(...Object.values(stats.byState))) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* Items Recentes - Layout em Duas Colunas */}
+        <div className="recent-items-section">
+          <div className="section-title mb-8">
+            <Clock className="section-icon" />
+            Items Recentes
           </div>
-
-          {/* Recent Items */}
-          <div className="content-section">
-            <div className="section-title">
-              <Clock className="section-icon" />
-              Items Recentes
-            </div>
-            <div className="work-items-list">
-              {stats?.recentItems?.slice(0, 5).map((item) => (
-                <div key={item.id} className="work-item">
-                  <div className="work-item-header">
-                    <div className="work-item-id">#{item.id}</div>
-                    <div className={`status-badge ${getStateColor(item.state)}`}>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {stats?.recentItems?.slice(0, 10).map((item) => (
+              <div key={item.id} className="recent-item-card">
+                <div className="recent-item-header">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="recent-item-id">#{item.id}</div>
+                    <div className={`recent-status-badge ${getStateColor(item.state)}`}>
                       {item.state}
                     </div>
                   </div>
-                  <div className="work-item-title">{item.title}</div>
-                  <div className="work-item-meta">
-                    <div className="flex items-center justify-between mb-2">
-                      <span><strong>Responsável:</strong> {item.assignedTo}</span>
-                      <span><strong>Cliente:</strong> {item.cliente}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span><strong>Valor:</strong> <span className="text-green-600 font-semibold">{item.valor}</span></span>
-                      <span><strong>Cash Claim:</strong> <span className="text-blue-600 font-semibold">{item.cashClaim}</span></span>
-                    </div>
+                  <div className="recent-item-type">
+                    {getTypeIcon(item.type)}
+                    <span className="ml-2">{item.type}</span>
                   </div>
                 </div>
-              ))}
-            </div>
+                
+                <div className="recent-item-title">{item.title}</div>
+                
+                <div className="recent-item-details">
+                  <div className="detail-row">
+                    <span className="detail-label">Responsável:</span>
+                    <span className="detail-value">{item.assignedTo}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <span className="detail-label">Cliente:</span>
+                    <span className="detail-value">{item.cliente}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <span className="detail-label">Valor:</span>
+                    <span className="detail-value-money green">{item.valor}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <span className="detail-label">Cash Claim:</span>
+                    <span className="detail-value-money blue">{item.cashClaim}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <span className="detail-label">Criado:</span>
+                    <span className="detail-value">{item.createdDate}</span>
+                  </div>
+                  
+                  {item.modifiedDate && (
+                    <div className="detail-row">
+                      <span className="detail-label">Modificado:</span>
+                      <span className="detail-value">{item.modifiedDate}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
