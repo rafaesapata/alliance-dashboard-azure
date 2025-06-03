@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import EnvDebugPanel from './EnvDebugPanel';
 import { 
   Activity, 
   Users, 
@@ -25,7 +24,6 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [usingMockData, setUsingMockData] = useState(false);
-  const [showDebug, setShowDebug] = useState(false);
 
   useEffect(() => {
     loadWorkItems();
@@ -146,13 +144,6 @@ const Dashboard = () => {
                     Conectado
                   </div>
                 )}
-                <button
-                  onClick={() => setShowDebug(!showDebug)}
-                  className="debug-button"
-                >
-                  <Settings className="w-4 h-4" />
-                  <span>Debug</span>
-                </button>
               </div>
             </div>
             <div className="text-right">
@@ -169,9 +160,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
-        {/* Painel de Debug */}
-        {showDebug && <EnvDebugPanel />}
 
         {/* Estatísticas Principais */}
         <div className="stats-grid">

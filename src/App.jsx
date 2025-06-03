@@ -44,7 +44,7 @@ function App() {
               <p className="text-gray-600">{configError}</p>
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                 <div className="flex items-start">
-                  <Settings className="w-5 h-5 text-yellow-600 mr-2 mt-0.5" />
+                  <AlertCircle className="w-5 h-5 text-yellow-600 mr-2 mt-0.5" />
                   <div>
                     <h4 className="text-sm font-medium text-yellow-800 mb-2">
                       Configuração Necessária no AWS Amplify
