@@ -12,10 +12,13 @@ import {
   Calendar,
   Target,
   Wifi,
-  WifiOff
+  WifiOff,
+  DollarSign,
+  BarChart3
 } from 'lucide-react';
 import azureService from '../lib/azureService';
 import { mockWorkItems, getMockStats } from '../lib/mockData';
+import '../styles/alliance-theme.css';
 
 const Dashboard = () => {
   const [workItems, setWorkItems] = useState([]);
@@ -60,15 +63,15 @@ const Dashboard = () => {
 
   const getStateColor = (state) => {
     const stateColors = {
-      'New': 'bg-blue-500',
-      'Active': 'bg-yellow-500',
-      'Resolved': 'bg-green-500',
-      'Closed': 'bg-gray-500',
-      'Done': 'bg-green-600',
-      'In Progress': 'bg-orange-500',
-      'To Do': 'bg-blue-400'
+      'New': 'new',
+      'Active': 'active',
+      'Resolved': 'done',
+      'Closed': 'done',
+      'Done': 'done',
+      'In Progress': 'progress',
+      'To Do': 'new'
     };
-    return stateColors[state] || 'bg-gray-400';
+    return stateColors[state] || 'new';
   };
 
   const getTypeIcon = (type) => {
@@ -81,6 +84,13 @@ const Dashboard = () => {
     };
     const Icon = typeIcons[type] || Activity;
     return <Icon className="w-4 h-4" />;
+  };
+
+  const formatCurrency = (value) => {
+    if (typeof value === 'string' && value.includes('$')) {
+      return value;
+    }
+    return `US$ ${value?.toLocaleString('pt-BR') || '0'},00`;
   };
 
   if (loading && !stats) {
@@ -118,109 +128,184 @@ const Dashboard = () => {
     );
   }
 
+  const totalItems = stats?.total || 0;
+  const inProgress = (stats?.byState['Active'] || 0) + (stats?.byState['In Progress'] || 0);
+  const completed = (stats?.byState['Done'] || 0) + (stats?.byState['Closed'] || 0);
+  const conversionRate = totalItems > 0 ? Math.round((completed / totalItems) * 100) : 0;
+
   return (
-    <div className="dashboard-container fade-in">
-      <div className="dashboard-content">
+    <div className="min-h-screen bg-white">
+      {/* Header Alliance */}
+      <header className="alliance-header">
+        <div className="alliance-header-content">
+          <div className="alliance-header-left">
+            <h1 className="alliance-title">Azure DevOps Dashboard</h1>
+            <p className="alliance-subtitle">Última atualização: {lastUpdate.toLocaleString('pt-BR')}</p>
+          </div>
+          <div className="alliance-header-right">
+            Powered by<br />UDS Tecnologia
+          </div>
+        </div>
+      </header>
 
-
-        {/* Estatísticas Principais */}
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-card-header">
-              <div className="stat-card-title">Total de Items</div>
-              <Activity className="stat-card-icon" />
+      {/* Container Principal */}
+      <div className="alliance-container">
+        {/* Cards Principais */}
+        <div className="alliance-stats-grid">
+          <div className="alliance-stat-card green alliance-animate">
+            <div className="alliance-card-header">
+              <h3 className="alliance-card-title">Work Items Ativos</h3>
+              <TrendingUp className="alliance-card-icon" />
             </div>
-            <div className="stat-card-value">{stats?.total || 0}</div>
-            <div className="stat-card-description">Work items ativos</div>
+            <div className="alliance-card-value green">{inProgress}</div>
+            <p className="alliance-card-description">{formatCurrency(stats?.valorMes || 0)} em valor</p>
           </div>
 
-          <div className="stat-card orange">
-            <div className="stat-card-header">
-              <div className="stat-card-title">Em Progresso</div>
-              <Clock className="stat-card-icon" />
+          <div className="alliance-stat-card blue alliance-animate">
+            <div className="alliance-card-header">
+              <h3 className="alliance-card-title">Work Items Concluídos</h3>
+              <CheckCircle className="alliance-card-icon" />
             </div>
-            <div className="stat-card-value">
-              {(stats?.byState['Active'] || 0) + (stats?.byState['In Progress'] || 0)}
-            </div>
-            <div className="stat-card-description">Items em desenvolvimento</div>
+            <div className="alliance-card-value blue">{completed}</div>
+            <p className="alliance-card-description">{formatCurrency(stats?.valorTrimestre || 0)} em valor</p>
           </div>
 
-          <div className="stat-card green">
-            <div className="stat-card-header">
-              <div className="stat-card-title">Concluídos</div>
-              <CheckCircle className="stat-card-icon" />
+          <div className="alliance-stat-card purple alliance-animate">
+            <div className="alliance-card-header">
+              <h3 className="alliance-card-title">Total de Work Items</h3>
+              <DollarSign className="alliance-card-icon" />
             </div>
-            <div className="stat-card-value">
-              {(stats?.byState['Done'] || 0) + (stats?.byState['Closed'] || 0)}
+            <div className="alliance-card-value purple">{totalItems}</div>
+            <p className="alliance-card-description">{formatCurrency(stats?.totalValue || 0)} valor total</p>
+          </div>
+
+          <div className="alliance-stat-card orange alliance-animate">
+            <div className="alliance-card-header">
+              <h3 className="alliance-card-title">Taxa de Conclusão</h3>
+              <BarChart3 className="alliance-card-icon" />
             </div>
-            <div className="stat-card-description">Items finalizados</div>
+            <div className="alliance-card-value orange">{conversionRate}%</div>
+            <p className="alliance-card-description">{completed} de {totalItems} concluídos</p>
           </div>
         </div>
 
-        {/* Items Recentes - Layout em Duas Colunas */}
-        <div className="recent-items-section">
-          <div className="section-title mb-8">
-            <Clock className="section-icon" />
-            Items Recentes
+        {/* Análises Mensal e Trimestral */}
+        <div className="alliance-analysis-grid">
+          <div className="alliance-analysis-card alliance-animate">
+            <div className="alliance-analysis-header">
+              <Calendar className="alliance-analysis-icon blue" />
+              <div>
+                <h3 className="alliance-analysis-title">Análise Mensal</h3>
+                <p className="alliance-analysis-subtitle">Dados do mês atual</p>
+              </div>
+            </div>
+            <div className="alliance-metrics">
+              <div className="alliance-metric">
+                <div className="alliance-metric-label">Meta de Work Items</div>
+                <div className="alliance-metric-value green">
+                  {Math.round((inProgress / Math.max(totalItems, 1)) * 100)}%
+                </div>
+                <div className="alliance-metric-description">
+                  {inProgress} de {totalItems} (faltam {totalItems - inProgress})
+                </div>
+              </div>
+              <div className="alliance-metric">
+                <div className="alliance-metric-label">Meta de Valor</div>
+                <div className="alliance-metric-value blue">
+                  {stats?.valorMes ? Math.round((stats.valorMes / Math.max(stats.totalValue, 1)) * 100) : 0}%
+                </div>
+                <div className="alliance-metric-description">
+                  {formatCurrency(stats?.valorMes || 0)} de {formatCurrency(stats?.totalValue || 0)}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="alliance-analysis-card alliance-animate">
+            <div className="alliance-analysis-header">
+              <Calendar className="alliance-analysis-icon purple" />
+              <div>
+                <h3 className="alliance-analysis-title">Análise Trimestral</h3>
+                <p className="alliance-analysis-subtitle">Dados do trimestre atual</p>
+              </div>
+            </div>
+            <div className="alliance-metrics">
+              <div className="alliance-metric">
+                <div className="alliance-metric-label">Meta de Work Items</div>
+                <div className="alliance-metric-value green">
+                  {Math.round((completed / Math.max(totalItems, 1)) * 100)}%
+                </div>
+                <div className="alliance-metric-description">
+                  {completed} de {totalItems} (faltam {totalItems - completed})
+                </div>
+              </div>
+              <div className="alliance-metric">
+                <div className="alliance-metric-label">Meta de Valor</div>
+                <div className="alliance-metric-value purple">
+                  {stats?.valorTrimestre ? Math.round((stats.valorTrimestre / Math.max(stats.totalValue, 1)) * 100) : 0}%
+                </div>
+                <div className="alliance-metric-description">
+                  {formatCurrency(stats?.valorTrimestre || 0)} de {formatCurrency(stats?.totalValue || 0)}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Últimos Work Items */}
+        <div className="alliance-recent-section alliance-animate">
+          <div className="alliance-section-header">
+            <h2 className="alliance-section-title">Últimos {stats?.recentItems?.length || 0} Work Items</h2>
+            <p className="alliance-section-subtitle">Work items mais recentes ordenados por data de modificação</p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {stats?.recentItems?.slice(0, 10).map((item) => (
-              <div key={item.id} className="recent-item-card">
-                <div className="recent-item-header">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="recent-item-id">#{item.id}</div>
-                    <div className={`recent-status-badge ${getStateColor(item.state)}`}>
-                      {item.state}
-                    </div>
-                  </div>
-                  <div className="recent-item-type">
-                    {getTypeIcon(item.type)}
-                    <span className="ml-2">{item.type}</span>
-                  </div>
+          <div className="alliance-recent-grid">
+            {stats?.recentItems?.map((item) => (
+              <div key={item.id} className="alliance-recent-card">
+                <div className="alliance-recent-header">
+                  <span className="alliance-recent-id">ID: {item.id}</span>
+                  <span className={`alliance-recent-status ${getStateColor(item.state)}`}>
+                    {item.state}
+                  </span>
                 </div>
                 
-                <div className="recent-item-title">{item.title}</div>
+                <div className="alliance-recent-value">{item.valor}</div>
                 
-                <div className="recent-item-details">
-                  <div className="detail-row">
-                    <span className="detail-label">Responsável:</span>
-                    <span className="detail-value">{item.assignedTo}</span>
+                <div className="alliance-recent-details">
+                  <div className="alliance-recent-detail">
+                    <strong>Cliente:</strong> {item.cliente}
                   </div>
-                  
-                  <div className="detail-row">
-                    <span className="detail-label">Cliente:</span>
-                    <span className="detail-value">{item.cliente}</span>
+                  <div className="alliance-recent-detail">
+                    <strong>Responsável:</strong> {item.assignedTo}
                   </div>
-                  
-                  <div className="detail-row">
-                    <span className="detail-label">Valor:</span>
-                    <span className="detail-value-money green">{item.valor}</span>
+                  <div className="alliance-recent-detail">
+                    <strong>Cash Claim:</strong> {item.cashClaim}
                   </div>
-                  
-                  <div className="detail-row">
-                    <span className="detail-label">Cash Claim:</span>
-                    <span className="detail-value-money blue">{item.cashClaim}</span>
+                  <div className="alliance-recent-detail">
+                    <strong>Modificado:</strong> {item.modifiedDate || item.createdDate}
                   </div>
-                  
-                  <div className="detail-row">
-                    <span className="detail-label">Criado:</span>
-                    <span className="detail-value">{item.createdDate}</span>
-                  </div>
-                  
-                  {item.modifiedDate && (
-                    <div className="detail-row">
-                      <span className="detail-label">Modificado:</span>
-                      <span className="detail-value">{item.modifiedDate}</span>
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-
+        {/* Rodapé Alliance */}
+        <footer className="alliance-footer">
+          <div className="alliance-footer-left">
+            <div className="alliance-footer-text">© 2025 UDS Tecnologia. Todos os direitos reservados.</div>
+            <div className="alliance-footer-text">
+              Desenvolvido com React + Azure DevOps SDK | Dados em tempo real do Azure DevOps
+            </div>
+          </div>
+          <div className="alliance-footer-right">
+            <div className="alliance-footer-version">Versão: v1.0.9</div>
+            <div className="alliance-footer-version">Build: {new Date().toLocaleDateString('pt-BR')}</div>
+            <div className="alliance-footer-text">
+              Status: {usingMockData ? '⚠️ Demonstração' : '✅ Conectado'}
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
