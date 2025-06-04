@@ -79,7 +79,9 @@ const Dashboard = () => {
       'Closed': 'done',
       'Done': 'done',
       'In Progress': 'progress',
-      'To Do': 'new'
+      'To Do': 'new',
+      'DOING': 'doing',      // Nova cor para DOING
+      'TODO': 'todo'         // Nova cor para TODO
     };
     return stateColors[state] || 'new';
   };
@@ -139,7 +141,7 @@ const Dashboard = () => {
   }
 
   const totalItems = stats?.total || 0;
-  const inProgress = (stats?.byState['Active'] || 0) + (stats?.byState['In Progress'] || 0);
+  const inProgress = (stats?.byState['DOING'] || 0) + (stats?.byState['TODO'] || 0);
   const completed = (stats?.byState['Done'] || 0) + (stats?.byState['Closed'] || 0);
   const conversionRate = totalItems > 0 ? Math.round((completed / totalItems) * 100) : 0;
 

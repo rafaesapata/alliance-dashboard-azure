@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
-import Footer from './components/Footer';
 import EnvDebugPanel from './components/EnvDebugPanel';
 import { validateConfig } from './lib/azureConfig';
 import { AlertCircle } from 'lucide-react';
