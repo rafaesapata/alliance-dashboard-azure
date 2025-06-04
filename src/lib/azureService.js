@@ -174,7 +174,9 @@ class AzureDevOpsService {
       valorTrimestre: 0,
       totalValue: 0,
       totalCashClaim: 0
-    };tem => {
+    };
+
+    workItems.forEach(item => {
       // Por estado
       stats.byState[item.state] = (stats.byState[item.state] || 0) + 1;
       
