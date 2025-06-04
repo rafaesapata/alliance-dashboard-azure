@@ -9,12 +9,14 @@ class AzureDevOpsService {
   async getWorkItemsByAreaPath(areaPath = azureConfig.areaPathFilter) {
     try {
       console.log('🔍 Iniciando busca de work items...');
-      console.log('📍 Area Path:', areaPath);
+      console.log('📍 Filtro de áreas:', areaPath);
+      console.log('📍 Áreas processadas:', azureConfig.getAreaPaths());
       console.log('🌐 Base URL:', azureConfig.getBaseUrl());
       
-      // Query WIQL para buscar work items por Area Path
+      // Query WIQL para buscar work items por múltiplas Area Paths
+      const areaPathCondition = azureConfig.getAreaPathQuery();
       const wiqlQuery = {
-        query: `SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], [System.CreatedDate], [System.WorkItemType], [System.AreaPath] FROM WorkItems WHERE [System.AreaPath] UNDER '${areaPath}' ORDER BY [System.CreatedDate] DESC`
+        query: `SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], [System.CreatedDate], [System.WorkItemType], [System.AreaPath] FROM WorkItems WHERE ${areaPathCondition} ORDER BY [System.CreatedDate] DESC`
       };
 
       console.log('📝 Query WIQL:', wiqlQuery.query);

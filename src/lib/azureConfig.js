@@ -45,6 +45,29 @@ export const azureConfig = {
   metaMensal: parseInt(import.meta.env.VITE_ALLIANCE_AZURE_META_MENSAL) || 25000,
   metaTrimestral: parseInt(import.meta.env.VITE_ALLIANCE_AZURE_META_TRIMESTRAL) || 75000,
   
+  // Função para processar múltiplas áreas separadas por vírgula
+  getAreaPaths: () => {
+    const filter = azureConfig.areaPathFilter;
+    if (!filter) return ['AWS Partnership'];
+    
+    // Dividir por vírgula e limpar espaços
+    const areas = filter.split(',').map(area => area.trim()).filter(area => area.length > 0);
+    console.log('📍 Áreas configuradas:', areas);
+    return areas;
+  },
+  
+  // Função para gerar query WIQL com múltiplas áreas
+  getAreaPathQuery: () => {
+    const areas = azureConfig.getAreaPaths();
+    if (areas.length === 1) {
+      return `[System.AreaPath] UNDER '${areas[0]}'`;
+    }
+    
+    // Para múltiplas áreas, usar OR
+    const conditions = areas.map(area => `[System.AreaPath] UNDER '${area}'`);
+    return `(${conditions.join(' OR ')})`;
+  },
+  
   // URLs base para diferentes endpoints
   getBaseUrl: () => `${azureConfig.workspaceUrl}/_apis`,
   getWorkItemsUrl: () => `${azureConfig.getBaseUrl()}/wit/workitems`,
