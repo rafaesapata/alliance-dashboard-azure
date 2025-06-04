@@ -29,7 +29,7 @@
 .alliance-header {
   background: var(--alliance-blue-primary);
   color: white;
-  padding: 11px 0; /* Reduzido 30% de 16px para 11px */
+  padding: 4px 0; /* Reduzido 60% de 11px para 4px */
   box-shadow: var(--alliance-shadow-md);
   position: sticky;
   top: 0;
@@ -39,7 +39,7 @@
 .alliance-header-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px; /* Reduzido de 24px para 16px */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,22 +51,22 @@
 }
 
 .alliance-title {
-  font-size: 1.5rem;
+  font-size: 1rem; /* Reduzido 60% de 1.5rem para 1rem */
   font-weight: 700;
   margin: 0;
   color: white;
 }
 
 .alliance-subtitle {
-  font-size: 0.875rem;
+  font-size: 0.6rem; /* Reduzido 60% de 0.875rem para 0.6rem */
   font-weight: 400;
   margin: 0;
   color: rgba(255, 255, 255, 0.9);
-  margin-top: 2px;
+  margin-top: 1px; /* Reduzido de 2px para 1px */
 }
 
 .alliance-header-right {
-  font-size: 0.875rem;
+  font-size: 0.6rem; /* Reduzido 60% de 0.875rem para 0.6rem */
   color: rgba(255, 255, 255, 0.9);
   text-align: right;
 }
