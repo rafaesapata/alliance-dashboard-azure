@@ -35,6 +35,16 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Reload automático da página a cada 120 segundos (2 minutos)
+  useEffect(() => {
+    const reloadInterval = setInterval(() => {
+      console.log('🔄 Reload automático da página...');
+      window.location.reload();
+    }, 120 * 1000); // 120 segundos
+
+    return () => clearInterval(reloadInterval);
+  }, []);
+
   const loadWorkItems = async () => {
     try {
       setLoading(true);
