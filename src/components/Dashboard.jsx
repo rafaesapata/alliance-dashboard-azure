@@ -225,7 +225,7 @@ const Dashboard = () => {
                   {stats?.metaMensal ? Math.round((stats.cashClaimRealizadoMes / stats.metaMensal) * 100) : 0}%
                 </div>
                 <div className="alliance-metric-description">
-                  {formatCurrency(stats?.cashClaimRealizadoMes || 0)} de {formatCurrency(stats?.metaMensal || 25000)}
+                  {formatCurrency(stats?.cashClaimRealizadoMes || 0)} de {formatCurrency(stats?.metaMensal || 0)}
                 </div>
               </div>
             </div>
@@ -255,7 +255,7 @@ const Dashboard = () => {
                   {stats?.metaTrimestral ? Math.round((stats.cashClaimRealizadoTrimestre / stats.metaTrimestral) * 100) : 0}%
                 </div>
                 <div className="alliance-metric-description">
-                  {formatCurrency(stats?.cashClaimRealizadoTrimestre || 0)} de {formatCurrency(stats?.metaTrimestral || 75000)}
+                  {formatCurrency(stats?.cashClaimRealizadoTrimestre || 0)} de {formatCurrency(stats?.metaTrimestral || 0)}
                 </div>
               </div>
             </div>

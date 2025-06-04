@@ -5,7 +5,9 @@ export const debugEnvVars = () => {
     VITE_ALLIANCE_AZURE_WORKSPACE_URL: import.meta.env.VITE_ALLIANCE_AZURE_WORKSPACE_URL,
     VITE_ALLIANCE_AZURE_ORGANIZATION: import.meta.env.VITE_ALLIANCE_AZURE_ORGANIZATION,
     VITE_ALLIANCE_AZURE_API_VERSION: import.meta.env.VITE_ALLIANCE_AZURE_API_VERSION,
-    VITE_ALLIANCE_AZURE_AREA_PATH_FILTER: import.meta.env.VITE_ALLIANCE_AZURE_AREA_PATH_FILTER
+    VITE_ALLIANCE_AZURE_AREA_PATH_FILTER: import.meta.env.VITE_ALLIANCE_AZURE_AREA_PATH_FILTER,
+    VITE_ALLIANCE_AZURE_META_MENSAL: import.meta.env.VITE_ALLIANCE_AZURE_META_MENSAL,
+    VITE_ALLIANCE_AZURE_META_TRIMESTRAL: import.meta.env.VITE_ALLIANCE_AZURE_META_TRIMESTRAL
   };
 
   console.log('🔍 Debug - Variáveis de Ambiente:', envVars);
@@ -38,6 +40,10 @@ export const azureConfig = {
   organization: import.meta.env.VITE_ALLIANCE_AZURE_ORGANIZATION,
   apiVersion: import.meta.env.VITE_ALLIANCE_AZURE_API_VERSION || '7.1',
   areaPathFilter: import.meta.env.VITE_ALLIANCE_AZURE_AREA_PATH_FILTER || 'AWS Partnership',
+  
+  // Metas de performance (com valores padrão)
+  metaMensal: parseInt(import.meta.env.VITE_ALLIANCE_AZURE_META_MENSAL) || 25000,
+  metaTrimestral: parseInt(import.meta.env.VITE_ALLIANCE_AZURE_META_TRIMESTRAL) || 75000,
   
   // URLs base para diferentes endpoints
   getBaseUrl: () => `${azureConfig.workspaceUrl}/_apis`,

@@ -164,9 +164,9 @@ class AzureDevOpsService {
     const currentYear = now.getFullYear();
     const currentQuarter = Math.floor(currentMonth / 3);
     
-    // Metas definidas
-    const META_MENSAL = 25000; // $25,000
-    const META_TRIMESTRAL = 75000; // $75,000
+    // Metas definidas via variáveis de ambiente
+    const META_MENSAL = azureConfig.metaMensal;
+    const META_TRIMESTRAL = azureConfig.metaTrimestral;
     
     const stats = {
       total: workItems.length,
