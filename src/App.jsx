@@ -72,7 +72,6 @@ function App() {
       <main className="flex-1">
         <Dashboard />
       </main>
-      <Footer />
     </div>
   );
 }
