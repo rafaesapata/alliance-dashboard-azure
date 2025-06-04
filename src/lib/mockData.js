@@ -207,7 +207,7 @@ export const mockWorkItems = [
     valor: "$32,000.00",
     oportunidade: "O7134567",
     cliente: "Ambev",
-    cashClaim: "Disponível"
+    cashClaim: "Realizado"
   },
   {
     id: 12356,
@@ -226,7 +226,7 @@ export const mockWorkItems = [
     valor: "$18,500.00",
     oportunidade: "O7098765",
     cliente: "Natura",
-    cashClaim: "Disponível"
+    cashClaim: "Realizado"
   }
 ];
 
@@ -235,6 +235,10 @@ export const getMockStats = (workItems) => {
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
   const currentQuarter = Math.floor(currentMonth / 3);
+  
+  // Metas definidas
+  const META_MENSAL = 25000; // $25,000
+  const META_TRIMESTRAL = 75000; // $75,000
   
   const stats = {
     total: workItems.length,
@@ -245,7 +249,11 @@ export const getMockStats = (workItems) => {
     valorMes: 0,
     valorTrimestre: 0,
     totalValue: 0,
-    totalCashClaim: 0
+    totalCashClaim: 0,
+    metaMensal: META_MENSAL,
+    metaTrimestral: META_TRIMESTRAL,
+    cashClaimRealizadoMes: 0,
+    cashClaimRealizadoTrimestre: 0
   };
 
   workItems.forEach(item => {
@@ -258,23 +266,35 @@ export const getMockStats = (workItems) => {
     // Por responsável
     stats.byAssignee[item.assignedTo] = (stats.byAssignee[item.assignedTo] || 0) + 1;
     
-    // Calcular valores
+    // Calcular valores totais (todos os items)
     const itemValue = parseFloat(item.valor.replace(/[$\s,]/g, '')) || 0;
-    const cashClaimValue = parseFloat(item.cashClaim.replace(/[$\s,]/g, '')) || 0;
-    
     stats.totalValue += itemValue;
-    stats.totalCashClaim += cashClaimValue;
+    
+    // Verificar se Cash Claim é "Realizado" para contabilizar nas metas
+    const isCashClaimRealizado = item.cashClaim && 
+      (item.cashClaim.toLowerCase().includes('realizado') || 
+       item.cashClaim.toLowerCase().includes('realizada'));
     
     // Verificar se é do mês atual - usar createdDateObj para cálculos
     const itemDate = item.createdDateObj || new Date(item.createdDate);
     if (itemDate.getMonth() === currentMonth && itemDate.getFullYear() === currentYear) {
-      stats.valorMes += itemValue;
+      // Somar no valor mensal apenas se Cash Claim for "Realizado"
+      if (isCashClaimRealizado) {
+        const cashClaimValue = parseFloat(item.cashClaim.replace(/[$\s,]/g, '')) || 0;
+        stats.cashClaimRealizadoMes += cashClaimValue;
+      }
+      stats.valorMes += itemValue; // Manter valor total do mês para referência
     }
     
     // Verificar se é do trimestre atual
     const itemQuarter = Math.floor(itemDate.getMonth() / 3);
     if (itemQuarter === currentQuarter && itemDate.getFullYear() === currentYear) {
-      stats.valorTrimestre += itemValue;
+      // Somar no valor trimestral apenas se Cash Claim for "Realizado"
+      if (isCashClaimRealizado) {
+        const cashClaimValue = parseFloat(item.cashClaim.replace(/[$\s,]/g, '')) || 0;
+        stats.cashClaimRealizadoTrimestre += cashClaimValue;
+      }
+      stats.valorTrimestre += itemValue; // Manter valor total do trimestre para referência
     }
   });
 

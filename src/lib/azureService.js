@@ -164,6 +164,10 @@ class AzureDevOpsService {
     const currentYear = now.getFullYear();
     const currentQuarter = Math.floor(currentMonth / 3);
     
+    // Metas definidas
+    const META_MENSAL = 25000; // $25,000
+    const META_TRIMESTRAL = 75000; // $75,000
+    
     const stats = {
       total: workItems.length,
       byState: {},
@@ -173,7 +177,11 @@ class AzureDevOpsService {
       valorMes: 0,
       valorTrimestre: 0,
       totalValue: 0,
-      totalCashClaim: 0
+      totalCashClaim: 0,
+      metaMensal: META_MENSAL,
+      metaTrimestral: META_TRIMESTRAL,
+      cashClaimRealizadoMes: 0,
+      cashClaimRealizadoTrimestre: 0
     };
 
     workItems.forEach(item => {
@@ -186,20 +194,35 @@ class AzureDevOpsService {
       // Por responsável
       stats.byAssignee[item.assignedTo] = (stats.byAssignee[item.assignedTo] || 0) + 1;
       
-      // Calcular valores
+      // Calcular valores totais (todos os items)
       const itemValue = this.parseValueToNumber(item.valor);
       stats.totalValue += itemValue;
+      
+      // Verificar se Cash Claim é "Realizado" para contabilizar nas metas
+      const isCashClaimRealizado = item.cashClaim && 
+        (item.cashClaim.toLowerCase().includes('realizado') || 
+         item.cashClaim.toLowerCase().includes('realizada'));
       
       // Verificar se é do mês atual - usar createdDateObj para cálculos
       const itemDate = item.createdDateObj || new Date(item.createdDate);
       if (itemDate.getMonth() === currentMonth && itemDate.getFullYear() === currentYear) {
-        stats.valorMes += itemValue;
+        // Somar no valor mensal apenas se Cash Claim for "Realizado"
+        if (isCashClaimRealizado) {
+          const cashClaimValue = this.parseValueToNumber(item.cashClaim);
+          stats.cashClaimRealizadoMes += cashClaimValue;
+        }
+        stats.valorMes += itemValue; // Manter valor total do mês para referência
       }
       
       // Verificar se é do trimestre atual
       const itemQuarter = Math.floor(itemDate.getMonth() / 3);
       if (itemQuarter === currentQuarter && itemDate.getFullYear() === currentYear) {
-        stats.valorTrimestre += itemValue;
+        // Somar no valor trimestral apenas se Cash Claim for "Realizado"
+        if (isCashClaimRealizado) {
+          const cashClaimValue = this.parseValueToNumber(item.cashClaim);
+          stats.cashClaimRealizadoTrimestre += cashClaimValue;
+        }
+        stats.valorTrimestre += itemValue; // Manter valor total do trimestre para referência
       }
     });
 

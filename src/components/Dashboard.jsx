@@ -220,12 +220,12 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="alliance-metric">
-                <div className="alliance-metric-label">Meta de Valor</div>
+                <div className="alliance-metric-label">Meta de Valor (Cash Claim Realizado)</div>
                 <div className="alliance-metric-value blue">
-                  {stats?.valorMes ? Math.round((stats.valorMes / Math.max(stats.totalValue, 1)) * 100) : 0}%
+                  {stats?.metaMensal ? Math.round((stats.cashClaimRealizadoMes / stats.metaMensal) * 100) : 0}%
                 </div>
                 <div className="alliance-metric-description">
-                  {formatCurrency(stats?.valorMes || 0)} de {formatCurrency(stats?.totalValue || 0)}
+                  {formatCurrency(stats?.cashClaimRealizadoMes || 0)} de {formatCurrency(stats?.metaMensal || 25000)}
                 </div>
               </div>
             </div>
@@ -250,12 +250,12 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="alliance-metric">
-                <div className="alliance-metric-label">Meta de Valor</div>
+                <div className="alliance-metric-label">Meta de Valor (Cash Claim Realizado)</div>
                 <div className="alliance-metric-value purple">
-                  {stats?.valorTrimestre ? Math.round((stats.valorTrimestre / Math.max(stats.totalValue, 1)) * 100) : 0}%
+                  {stats?.metaTrimestral ? Math.round((stats.cashClaimRealizadoTrimestre / stats.metaTrimestral) * 100) : 0}%
                 </div>
                 <div className="alliance-metric-description">
-                  {formatCurrency(stats?.valorTrimestre || 0)} de {formatCurrency(stats?.totalValue || 0)}
+                  {formatCurrency(stats?.cashClaimRealizadoTrimestre || 0)} de {formatCurrency(stats?.metaTrimestral || 75000)}
                 </div>
               </div>
             </div>
