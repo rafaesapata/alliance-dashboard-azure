@@ -5,6 +5,7 @@ import { validateConfig } from './lib/azureConfig';
 import { AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import './App.css';
+import './styles/vertical-expand.css'; // Importar o novo arquivo CSS
 
 function App() {
   const [configValid, setConfigValid] = useState(false);

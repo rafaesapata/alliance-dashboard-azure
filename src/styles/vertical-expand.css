@@ -1,0 +1,130 @@
+/* 
+ * Arquivo de estilos para aumentar o tamanho vertical da página em 20%
+ * e reduzir todo o conteúdo em 50%
+ * v1.0.24
+ */
+
+/* Aumentar o tamanho vertical da página em 20% */
+html, body {
+  min-height: 120vh; /* Aumenta o tamanho vertical em 20% */
+  overflow-x: hidden;
+}
+
+/* Reduzir todo o conteúdo em 50% */
+.alliance-container {
+  transform: scale(0.5);
+  transform-origin: top center;
+  margin-bottom: -50%; /* Compensar o espaço reduzido */
+  max-width: 200%; /* Dobrar a largura máxima para compensar a escala */
+  width: 200%;
+  margin-left: -50%; /* Centralizar o conteúdo */
+  padding-bottom: 50vh; /* Adicionar espaço extra no final */
+}
+
+/* Ajustes para o header */
+.alliance-header {
+  transform: scale(0.5);
+  transform-origin: top center;
+  width: 200%;
+  margin-left: -50%;
+  padding: 2px 0 !important; /* Reduzir ainda mais o padding */
+}
+
+.alliance-header-content {
+  max-width: 2400px !important; /* Dobrar a largura máxima */
+}
+
+/* Ajustes para os cards principais */
+.alliance-stats-grid {
+  gap: 8px !important; /* Reduzir o gap entre os cards */
+}
+
+.alliance-stat-card {
+  padding: 9px !important; /* Reduzir o padding dos cards */
+}
+
+/* Ajustes para os cards de work items */
+.alliance-recent-grid {
+  gap: 10px !important; /* Reduzir o gap entre os work items */
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)) !important; /* Reduzir o tamanho mínimo */
+}
+
+.alliance-recent-card {
+  padding: 10px !important; /* Reduzir o padding dos work items */
+}
+
+/* Ajustes para fontes */
+.alliance-card-value {
+  font-size: 1.125rem !important; /* Reduzir o tamanho da fonte dos valores */
+}
+
+.alliance-recent-client {
+  font-size: 0.875rem !important; /* Reduzir o tamanho da fonte dos clientes */
+  margin: 6px 0 4px 0 !important; /* Reduzir as margens */
+}
+
+.alliance-recent-title {
+  font-size: 0.75rem !important; /* Reduzir o tamanho da fonte dos títulos */
+  margin: 0 0 6px 0 !important; /* Reduzir as margens */
+}
+
+.alliance-recent-detail {
+  font-size: 0.75rem !important; /* Reduzir o tamanho da fonte dos detalhes */
+}
+
+/* Ajustes para o rodapé */
+.alliance-footer {
+  margin-top: 24px !important; /* Reduzir a margem do rodapé */
+  padding-top: 12px !important; /* Reduzir o padding do rodapé */
+}
+
+/* Ajustes para o layout em telas grandes */
+@media (min-width: 1400px) {
+  .alliance-recent-grid {
+    grid-template-columns: repeat(6, 1fr) !important; /* 6 colunas em telas grandes */
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .alliance-recent-grid {
+    grid-template-columns: repeat(4, 1fr) !important; /* 4 colunas em telas médias */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .alliance-recent-grid {
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 colunas em telas pequenas */
+  }
+}
+
+/* Ajustes para o número de work items visíveis */
+.alliance-recent-section {
+  margin-top: 16px !important; /* Reduzir a margem superior */
+}
+
+.alliance-section-header {
+  margin-bottom: 12px !important; /* Reduzir a margem inferior */
+}
+
+/* Aumentar o número de work items visíveis */
+.alliance-recent-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr) !important; /* Forçar 6 colunas */
+}
+
+/* Ajustes para o tamanho dos badges de status */
+.alliance-recent-status {
+  padding: 2px 4px !important; /* Reduzir o padding dos badges */
+  font-size: 0.6rem !important; /* Reduzir o tamanho da fonte dos badges */
+}
+
+/* Ajustes para o ícone de cash claim disponível */
+.alliance-cash-available-icon {
+  font-size: 0.9em !important; /* Reduzir o tamanho do ícone */
+}
+
+/* Ajustes para o espaçamento entre detalhes */
+.alliance-recent-details {
+  gap: 2px !important; /* Reduzir o espaçamento entre detalhes */
+}
+
