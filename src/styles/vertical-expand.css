@@ -1,7 +1,7 @@
 /* 
  * Arquivo de estilos para aumentar o tamanho vertical da página em 20%
  * e reduzir todo o conteúdo em 50%
- * v1.0.25
+ * v1.0.26
  */
 
 /* Aumentar o tamanho vertical da página em 20% */
@@ -69,19 +69,49 @@ html, body {
   padding: 16px !important; /* Aumentar o padding dos work items */
 }
 
-/* Ajustes para fontes dos work items */
+/* Aumentar as fontes dos work items em 25% */
 .alliance-recent-client {
-  font-size: 1rem !important; /* Aumentar um pouco o tamanho da fonte dos clientes */
+  font-size: 1.25rem !important; /* Aumentar em 25% (de 1rem para 1.25rem) */
   margin: 8px 0 6px 0 !important; /* Ajustar as margens */
+  font-weight: 700 !important; /* Deixar mais bold */
 }
 
 .alliance-recent-title {
-  font-size: 0.875rem !important; /* Aumentar um pouco o tamanho da fonte dos títulos */
+  font-size: 1.1rem !important; /* Aumentar em 25% (de 0.875rem para 1.1rem) */
   margin: 0 0 8px 0 !important; /* Ajustar as margens */
+  line-height: 1.3 !important; /* Melhorar legibilidade */
 }
 
 .alliance-recent-detail {
-  font-size: 0.875rem !important; /* Aumentar um pouco o tamanho da fonte dos detalhes */
+  font-size: 1.1rem !important; /* Aumentar em 25% (de 0.875rem para 1.1rem) */
+  line-height: 1.4 !important; /* Melhorar legibilidade */
+}
+
+.alliance-recent-value {
+  font-size: 1.5rem !important; /* Aumentar em 25% */
+  margin: 10px 0 !important; /* Ajustar margens */
+  font-weight: 700 !important; /* Deixar mais bold */
+}
+
+.alliance-recent-id {
+  font-size: 1.1rem !important; /* Aumentar em 25% */
+  font-weight: 700 !important; /* Deixar mais bold */
+}
+
+.alliance-recent-status {
+  padding: 4px 8px !important; /* Aumentar o padding dos badges */
+  font-size: 0.875rem !important; /* Aumentar em 25% (de 0.7rem para 0.875rem) */
+  font-weight: 600 !important; /* Deixar mais bold */
+}
+
+/* Ajustes para o ícone de cash claim disponível */
+.alliance-cash-available-icon {
+  font-size: 1.375rem !important; /* Aumentar em 25% (de 1.1em para 1.375rem) */
+}
+
+/* Ajustes para o espaçamento entre detalhes */
+.alliance-recent-details {
+  gap: 6px !important; /* Aumentar o espaçamento entre detalhes */
 }
 
 /* Ajustes para o rodapé */
@@ -109,35 +139,19 @@ html, body {
   }
 }
 
-/* Ajustes para o número de work items visíveis */
+/* Aproximar os itens listados da análise mensal */
 .alliance-recent-section {
-  margin-top: 24px !important; /* Aumentar a margem superior */
+  margin-top: 4px !important; /* Reduzir ainda mais a margem superior (antes era 8px) */
 }
 
-.alliance-section-header {
-  margin-bottom: 16px !important; /* Aumentar a margem inferior */
+.alliance-analysis-grid {
+  margin-bottom: 4px !important; /* Reduzir ainda mais a margem inferior (antes era 8px) */
 }
 
 /* Ajustar para 5 itens por linha */
 .alliance-recent-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr) !important; /* Forçar 5 colunas */
-}
-
-/* Ajustes para o tamanho dos badges de status */
-.alliance-recent-status {
-  padding: 3px 6px !important; /* Aumentar o padding dos badges */
-  font-size: 0.7rem !important; /* Aumentar o tamanho da fonte dos badges */
-}
-
-/* Ajustes para o ícone de cash claim disponível */
-.alliance-cash-available-icon {
-  font-size: 1.1em !important; /* Aumentar o tamanho do ícone */
-}
-
-/* Ajustes para o espaçamento entre detalhes */
-.alliance-recent-details {
-  gap: 4px !important; /* Aumentar o espaçamento entre detalhes */
 }
 
 /* Dobrar o tamanho das fontes nas análises mensais e trimestrais */

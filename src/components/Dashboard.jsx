@@ -266,11 +266,6 @@ const Dashboard = () => {
 
         {/* Últimos Work Items */}
         <div className="alliance-recent-section alliance-animate">
-          <div className="alliance-section-header">
-            <h2 className="alliance-section-title">Últimos {stats?.recentItems?.length || 0} Work Items</h2>
-            <p className="alliance-section-subtitle">Work items mais recentes ordenados por data de modificação</p>
-          </div>
-          
           <div className="alliance-recent-grid">
             {stats?.recentItems?.map((item) => (
               <div key={item.id} className="alliance-recent-card">
@@ -327,7 +322,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="alliance-footer-right">
-            <div className="alliance-footer-version">Versão: v1.0.25</div>
+            <div className="alliance-footer-version">Versão: v1.0.26</div>
             <div className="alliance-footer-version">Build: {new Date().toLocaleDateString('pt-BR')}</div>
             <div className="alliance-footer-text">
               Status: {usingMockData ? '⚠️ Demonstração' : '✅ Conectado'}

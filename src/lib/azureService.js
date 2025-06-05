@@ -175,7 +175,7 @@ class AzureDevOpsService {
       byState: {},
       byType: {},
       byAssignee: {},
-      recentItems: workItems.slice(0, 12), // 12 mais recentes para melhor aproveitamento da tela
+      recentItems: workItems.slice(0, 10), // 10 mais recentes (antes eram 12)
       valorMes: 0,
       valorTrimestre: 0,
       totalValue: 0,
