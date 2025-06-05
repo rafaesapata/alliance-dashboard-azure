@@ -1,3 +1,5 @@
+import { initializeFilterRotation, getCurrentFilter } from './filterRotation';
+
 // Debug das variáveis de ambiente
 export const debugEnvVars = () => {
   const envVars = {
@@ -56,16 +58,21 @@ export const azureConfig = {
     return areas;
   },
   
-  // Função para gerar query WIQL com múltiplas áreas
-  getAreaPathQuery: () => {
+  // Função para obter a área atual com base na rotação cíclica
+  getCurrentAreaPath: () => {
     const areas = azureConfig.getAreaPaths();
-    if (areas.length === 1) {
-      return `[System.AreaPath] UNDER '${areas[0]}'`;
-    }
+    // Se houver apenas uma área, retorna ela diretamente
+    if (areas.length <= 1) return areas[0];
     
-    // Para múltiplas áreas, usar OR
-    const conditions = areas.map(area => `[System.AreaPath] UNDER '${area}'`);
-    return `(${conditions.join(' OR ')})`;
+    // Caso contrário, usa o sistema de rotação
+    return getCurrentFilter(areas);
+  },
+  
+  // Função para gerar query WIQL com a área atual
+  getAreaPathQuery: () => {
+    const currentArea = azureConfig.getCurrentAreaPath();
+    console.log('📍 Área atual:', currentArea);
+    return `[System.AreaPath] UNDER '${currentArea}'`;
   },
   
   // URLs base para diferentes endpoints

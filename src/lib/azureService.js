@@ -1,19 +1,35 @@
-import { azureConfig, validateConfig } from './azureConfig.js';
+import { azureConfig, validateConfig } from './azureConfig';
+import { initializeFilterRotation } from './filterRotation';
 
 class AzureDevOpsService {
   constructor() {
     validateConfig();
+    
+    // Inicializar o sistema de rotação de filtros
+    const areas = this.getAreaPaths();
+    initializeFilterRotation(areas);
+  }
+  
+  // Método para obter as áreas configuradas
+  getAreaPaths() {
+    return azureConfig.getAreaPaths();
+  }
+  
+  // Método para obter a área atual
+  getCurrentAreaPath() {
+    return azureConfig.getCurrentAreaPath();
   }
 
   // Buscar work items usando WIQL (Work Item Query Language)
-  async getWorkItemsByAreaPath(areaPath = azureConfig.areaPathFilter) {
+  async getWorkItemsByAreaPath() {
     try {
       console.log('🔍 Iniciando busca de work items...');
-      console.log('📍 Filtro de áreas:', areaPath);
-      console.log('📍 Áreas processadas:', azureConfig.getAreaPaths());
-      console.log('🌐 Base URL:', azureConfig.getBaseUrl());
       
-      // Query WIQL para buscar work items por múltiplas Area Paths
+      // Obter a área atual com base na rotação cíclica
+      const currentArea = azureConfig.getCurrentAreaPath();
+      console.log('📍 Área atual para consulta:', currentArea);
+      
+      // Query WIQL para buscar work items pela área atual
       const areaPathCondition = azureConfig.getAreaPathQuery();
       const wiqlQuery = {
         query: `SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], [System.CreatedDate], [System.WorkItemType], [System.AreaPath] FROM WorkItems WHERE ${areaPathCondition} ORDER BY [System.CreatedDate] DESC`

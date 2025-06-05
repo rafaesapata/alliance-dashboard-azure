@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import azureService from '../lib/azureService';
 import { mockWorkItems, getMockStats } from '../lib/mockData';
+import { prepareForNextReload } from '../lib/filterRotation';
 import '../styles/alliance-theme.css';
 
 const Dashboard = () => {
@@ -27,6 +28,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [usingMockData, setUsingMockData] = useState(false);
+  const [currentArea, setCurrentArea] = useState('');
 
   useEffect(() => {
     loadWorkItems();
@@ -39,6 +41,12 @@ const Dashboard = () => {
   useEffect(() => {
     const reloadInterval = setInterval(() => {
       console.log('🔄 Reload automático da página...');
+      
+      // Preparar o sistema para o próximo recarregamento
+      // Isso avança para o próximo filtro antes de recarregar
+      const areas = azureService.getAreaPaths();
+      prepareForNextReload(areas);
+      
       window.location.reload();
     }, 120 * 1000); // 120 segundos
 
@@ -50,6 +58,10 @@ const Dashboard = () => {
       setLoading(true);
       const items = await azureService.getWorkItemsByAreaPath();
       const statistics = azureService.getWorkItemStats(items);
+      
+      // Obter e armazenar a área atual
+      const currentAreaPath = azureService.getCurrentAreaPath();
+      setCurrentArea(currentAreaPath);
       
       setWorkItems(items);
       setStats(statistics);
@@ -322,11 +334,16 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="alliance-footer-right">
-            <div className="alliance-footer-version">Versão: v1.0.27</div>
+            <div className="alliance-footer-version">Versão: v1.0.28</div>
             <div className="alliance-footer-version">Build: {new Date().toLocaleDateString('pt-BR')}</div>
             <div className="alliance-footer-text">
               Status: {usingMockData ? '⚠️ Demonstração' : '✅ Conectado'}
             </div>
+            {currentArea && (
+              <div className="alliance-footer-text">
+                Área: {currentArea}
+              </div>
+            )}
           </div>
         </footer>
       </div>
