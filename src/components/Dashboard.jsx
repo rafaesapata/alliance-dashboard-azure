@@ -322,7 +322,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="alliance-footer-right">
-            <div className="alliance-footer-version">Versão: v1.0.26</div>
+            <div className="alliance-footer-version">Versão: v1.0.27</div>
             <div className="alliance-footer-version">Build: {new Date().toLocaleDateString('pt-BR')}</div>
             <div className="alliance-footer-text">
               Status: {usingMockData ? '⚠️ Demonstração' : '✅ Conectado'}
