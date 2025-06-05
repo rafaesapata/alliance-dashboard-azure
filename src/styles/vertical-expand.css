@@ -1,7 +1,7 @@
 /* 
  * Arquivo de estilos para aumentar o tamanho vertical da página em 20%
  * e reduzir todo o conteúdo em 50%
- * v1.0.24
+ * v1.0.25
  */
 
 /* Aumentar o tamanho vertical da página em 20% */
@@ -36,52 +36,64 @@ html, body {
 
 /* Ajustes para os cards principais */
 .alliance-stats-grid {
-  gap: 8px !important; /* Reduzir o gap entre os cards */
+  gap: 12px !important; /* Aumentar um pouco o gap entre os cards */
 }
 
 .alliance-stat-card {
-  padding: 9px !important; /* Reduzir o padding dos cards */
+  padding: 16px !important; /* Aumentar o padding dos cards */
+}
+
+/* Dobrar o tamanho das fontes dos indicadores */
+.alliance-card-value {
+  font-size: 2.5rem !important; /* Dobrar o tamanho da fonte dos valores */
+  line-height: 1.2 !important; /* Ajustar line-height para evitar sobreposição */
+}
+
+.alliance-card-title {
+  font-size: 1.75rem !important; /* Dobrar o tamanho da fonte dos títulos */
+  margin-bottom: 8px !important; /* Adicionar espaço abaixo do título */
+}
+
+.alliance-card-description {
+  font-size: 1.75rem !important; /* Dobrar o tamanho da fonte das descrições */
+  line-height: 1.3 !important; /* Ajustar line-height para melhor legibilidade */
 }
 
 /* Ajustes para os cards de work items */
 .alliance-recent-grid {
-  gap: 10px !important; /* Reduzir o gap entre os work items */
-  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)) !important; /* Reduzir o tamanho mínimo */
+  gap: 16px !important; /* Aumentar o gap entre os work items */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important; /* Aumentar o tamanho mínimo */
 }
 
 .alliance-recent-card {
-  padding: 10px !important; /* Reduzir o padding dos work items */
+  padding: 16px !important; /* Aumentar o padding dos work items */
 }
 
-/* Ajustes para fontes */
-.alliance-card-value {
-  font-size: 1.125rem !important; /* Reduzir o tamanho da fonte dos valores */
-}
-
+/* Ajustes para fontes dos work items */
 .alliance-recent-client {
-  font-size: 0.875rem !important; /* Reduzir o tamanho da fonte dos clientes */
-  margin: 6px 0 4px 0 !important; /* Reduzir as margens */
+  font-size: 1rem !important; /* Aumentar um pouco o tamanho da fonte dos clientes */
+  margin: 8px 0 6px 0 !important; /* Ajustar as margens */
 }
 
 .alliance-recent-title {
-  font-size: 0.75rem !important; /* Reduzir o tamanho da fonte dos títulos */
-  margin: 0 0 6px 0 !important; /* Reduzir as margens */
+  font-size: 0.875rem !important; /* Aumentar um pouco o tamanho da fonte dos títulos */
+  margin: 0 0 8px 0 !important; /* Ajustar as margens */
 }
 
 .alliance-recent-detail {
-  font-size: 0.75rem !important; /* Reduzir o tamanho da fonte dos detalhes */
+  font-size: 0.875rem !important; /* Aumentar um pouco o tamanho da fonte dos detalhes */
 }
 
 /* Ajustes para o rodapé */
 .alliance-footer {
-  margin-top: 24px !important; /* Reduzir a margem do rodapé */
-  padding-top: 12px !important; /* Reduzir o padding do rodapé */
+  margin-top: 32px !important; /* Aumentar a margem do rodapé */
+  padding-top: 16px !important; /* Aumentar o padding do rodapé */
 }
 
 /* Ajustes para o layout em telas grandes */
 @media (min-width: 1400px) {
   .alliance-recent-grid {
-    grid-template-columns: repeat(6, 1fr) !important; /* 6 colunas em telas grandes */
+    grid-template-columns: repeat(5, 1fr) !important; /* 5 colunas em telas grandes */
   }
 }
 
@@ -99,32 +111,85 @@ html, body {
 
 /* Ajustes para o número de work items visíveis */
 .alliance-recent-section {
-  margin-top: 16px !important; /* Reduzir a margem superior */
+  margin-top: 24px !important; /* Aumentar a margem superior */
 }
 
 .alliance-section-header {
-  margin-bottom: 12px !important; /* Reduzir a margem inferior */
+  margin-bottom: 16px !important; /* Aumentar a margem inferior */
 }
 
-/* Aumentar o número de work items visíveis */
+/* Ajustar para 5 itens por linha */
 .alliance-recent-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr) !important; /* Forçar 6 colunas */
+  grid-template-columns: repeat(5, 1fr) !important; /* Forçar 5 colunas */
 }
 
 /* Ajustes para o tamanho dos badges de status */
 .alliance-recent-status {
-  padding: 2px 4px !important; /* Reduzir o padding dos badges */
-  font-size: 0.6rem !important; /* Reduzir o tamanho da fonte dos badges */
+  padding: 3px 6px !important; /* Aumentar o padding dos badges */
+  font-size: 0.7rem !important; /* Aumentar o tamanho da fonte dos badges */
 }
 
 /* Ajustes para o ícone de cash claim disponível */
 .alliance-cash-available-icon {
-  font-size: 0.9em !important; /* Reduzir o tamanho do ícone */
+  font-size: 1.1em !important; /* Aumentar o tamanho do ícone */
 }
 
 /* Ajustes para o espaçamento entre detalhes */
 .alliance-recent-details {
-  gap: 2px !important; /* Reduzir o espaçamento entre detalhes */
+  gap: 4px !important; /* Aumentar o espaçamento entre detalhes */
+}
+
+/* Dobrar o tamanho das fontes nas análises mensais e trimestrais */
+.alliance-analysis-title {
+  font-size: 2.5rem !important; /* Dobrar o tamanho da fonte dos títulos */
+  line-height: 1.2 !important; /* Ajustar line-height */
+}
+
+.alliance-analysis-subtitle {
+  font-size: 1.75rem !important; /* Dobrar o tamanho da fonte dos subtítulos */
+  margin-top: 8px !important; /* Adicionar espaço acima do subtítulo */
+}
+
+.alliance-metric-label {
+  font-size: 1.75rem !important; /* Dobrar o tamanho da fonte dos labels */
+  margin-bottom: 12px !important; /* Adicionar espaço abaixo do label */
+}
+
+.alliance-metric-value {
+  font-size: 3rem !important; /* Dobrar o tamanho da fonte dos valores */
+  line-height: 1.1 !important; /* Ajustar line-height */
+  margin-bottom: 8px !important; /* Adicionar espaço abaixo do valor */
+}
+
+.alliance-metric-description {
+  font-size: 1.5rem !important; /* Dobrar o tamanho da fonte das descrições */
+}
+
+/* Ajustes para os ícones das análises */
+.alliance-analysis-icon {
+  width: 40px !important; /* Dobrar o tamanho dos ícones */
+  height: 40px !important; /* Dobrar o tamanho dos ícones */
+  margin-right: 16px !important; /* Aumentar a margem à direita */
+}
+
+/* Ajustes para o espaçamento nas análises */
+.alliance-metrics {
+  gap: 32px !important; /* Aumentar o gap entre as métricas */
+  margin-top: 24px !important; /* Adicionar espaço acima das métricas */
+}
+
+.alliance-metric {
+  padding: 12px !important; /* Adicionar padding nas métricas */
+}
+
+/* Ajustes para o cabeçalho da seção de análise */
+.alliance-analysis-header {
+  margin-bottom: 20px !important; /* Aumentar a margem inferior */
+}
+
+/* Ajustes para a seção de análise */
+.alliance-analysis-card {
+  padding: 24px !important; /* Aumentar o padding dos cards de análise */
 }
 
